@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 // Record Not Found — NORTHSPACE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    // Intelligent Clean-URL Fallback for Static Hosts (GitHub Pages, etc.)
+    (function() {
+      var pathname = window.location.pathname;
+      var search = window.location.search || '';
+      var hash = window.location.hash || '';
+
+      // Check if user requested /watch, /admin, /index without .html extension
+      if (/\/watch\/?$/i.test(pathname)) {
+        window.location.replace(pathname.replace(/\/watch\/?$/i, '/watch.html') + search + hash);
+        return;
+      }
+      if (/\/admin\/?$/i.test(pathname)) {
+        window.location.replace(pathname.replace(/\/admin\/?$/i, '/admin.html') + search + hash);
+        return;
+      }
+      if (/\/index\/?$/i.test(pathname)) {
+        window.location.replace(pathname.replace(/\/index\/?$/i, '/index.html') + search + hash);
+        return;
+      }
+
+      // Sync theme
+      var savedTheme = localStorage.getItem('aether_theme_v2') || localStorage.getItem('aether_theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
+  <style>
+    :root {
+      --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Geist Mono', monospace;
+      --bg-base: #f7f7f8;
+      --bg-surface: #ffffff;
+      --bg-pill: #ededf0;
+      --border-subtle: #e2e2e6;
+      --border-strong: #c8c8cf;
+      --text-primary: #121316;
+      --text-secondary: #575a65;
+      --text-muted: #8b8f9e;
+      --accent: #111317;
+      --accent-contrast: #ffffff;
+      --radius-pill: 9999px;
+      --radius-card: 14px;
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #0b0c0e;
+      --bg-surface: #131418;
+      --bg-pill: #1c1e24;
+      --border-subtle: #242730;
+      --border-strong: #363a46;
+      --text-primary: #f0f2f5;
+      --text-secondary: #a0a4b2;
+      --text-muted: #626674;
+      --accent: #f0f2f5;
+      --accent-contrast: #0b0c0e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .error-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      padding: 56px 40px;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .error-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .error-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: var(--bg-pill);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .error-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    }
+
+    .error-code {
+      font-family: var(--font-mono);
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .error-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .error-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .error-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 24px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-pill);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+    }
+
+    .footer-brand {
+      margin-top: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="error-card">
+    <div class="error-badge">
+      <span class="error-badge-dot"></span>
+      <span>NORTHSPACE // 404 DISCONNECTED</span>
+    </div>
+
+    <div class="error-code">404</div>
+
+    <h1 class="error-title">Target Record or Page Unreachable</h1>
+
+    <p class="error-desc">
+      The catalog reel or endpoint you navigated to does not exist or was relocated. Return to the public stream catalog to browse all available motion assets.
+    </p>
+
+    <div class="error-actions">
+      <a href="index.html" class="btn-primary" id="btnHome">
+        <span>← Return to Catalog Home</span>
+      </a>
+      <a href="admin.html" class="btn-secondary" id="btnAdmin">
+        <span>Open Admin Console</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-brand">
+    NORTHSPACE STREAMING ARCHITECTURE // CELLULOID &amp; MOTION
+  </div>
+
+</body>
+</html>

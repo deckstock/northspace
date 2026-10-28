@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORTHSPACE — Stream &amp; Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/cards.css">
+</head>
+<body>
+
+  <!-- Full Application Shell (Clean, Full-Width Monochromatic Architecture) -->
+  <div class="app-shell">
+
+    <!-- Top Sticky Header: Brand Logo Left, Centered Search, Corner CRM & User Menu Right -->
+    <header class="top-header" id="topHeader">
+      <div class="header-inner">
+        
+        <!-- Far Left: Brand Logo (Links to Home) -->
+        <a href="index.html" class="brand-link" title="NorthSpace Stream Home">
+          <span class="brand-title">North</span>
+          <span class="brand-tm">SPACE // stream</span>
+        </a>
+
+        <!-- Center: Centered Widescreen Search Bar Placement -->
+        <div class="header-search-wrap">
+          <div class="top-search-container" id="searchContainer">
+            <svg class="svg-icon search-lead-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="mainSearchInput" class="main-search-input" placeholder="Search videos, categories, tags, or hardware..." autocomplete="off">
+            <button class="search-clear-icon-btn" id="searchClearBtn" title="Clear input" style="display:none;">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <span class="search-kbd-shortcut" id="searchKbdHint">/</span>
+          </div>
+        </div>
+
+        <!-- Far Right Corner: Content CRM Console & User Profile Menu -->
+        <div class="header-right-actions">
+          
+          <!-- Content CRM Console (Visible to Authenticated Administrators) -->
+          <a href="admin.html" class="header-crm-btn" id="headerCrmBtn" title="Content CRM Console">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <span>Content CRM Console</span>
+          </a>
+
+          <!-- Sleek User Profile Avatar & Interactive Dropdown Menu -->
+          <div class="user-menu-wrapper" id="userMenuWrapper">
+            <button type="button" class="user-avatar-btn" id="userMenuToggleBtn" aria-expanded="false" title="User Menu">
+              <svg class="svg-icon user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <svg class="svg-icon chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <!-- Floating Dropdown Card (Clean Minimalist Professional) -->
+            <div class="user-dropdown-menu" id="userDropdownMenu" style="display: none;">
+              
+              <!-- User Header -->
+              <div class="dropdown-header">
+                <div class="dropdown-user-info">
+                  <span class="dropdown-user-name" id="dropdownUserName">Administrator</span>
+                  <span class="dropdown-user-status" id="dropdownUserStatus">SYSTEM SESSION</span>
+                </div>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
+              <div class="dropdown-items-list">
+                <!-- 1. Administrator Mode Switch Toggle -->
+                <button type="button" class="dropdown-item dropdown-toggle-item" id="menuItemAdminAuth" title="Toggle CRM button visibility">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Admin Mode</span>
+                  </div>
+                  <div class="switch-track active" id="adminSwitchTrack">
+                    <div class="switch-knob"></div>
+                  </div>
+                </button>
+
+                <!-- 2. Dark Mode with Professional Sliding Switch -->
+                <button type="button" class="dropdown-item dropdown-toggle-item" id="menuItemTheme">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <svg class="svg-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <span>Dark Mode</span>
+                  </div>
+                  <div class="switch-track" id="themeSwitchTrack">
+                    <div class="switch-knob"></div>
+                  </div>
+                </button>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- 3. My Account -->
+                <button type="button" class="dropdown-item" id="menuItemAccount">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <span>My Account</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Scrollable Area (Full Widescreen Space Utilization) -->
+    <main class="main-container">
+
+      <!-- Horizontal Clean Category Filter Strip -->
+      <nav class="category-filter-strip" id="categoryFilterStrip" aria-label="Category Filters">
+        <!-- Rendered dynamically by index.js with counts and subtle group dividers -->
+      </nav>
+
+      <!-- Featured Hero Video Showcase (Optional Dynamic Showcase) -->
+      <section class="featured-hero-wrap" id="featuredHeroSection" style="display:none;">
+        <div class="featured-hero-grid">
+          <div class="featured-media-stage" id="featuredMediaStage">
+            <img src="" alt="" class="featured-media-img" id="featuredHeroImg" loading="eager" decoding="async">
+            <div class="featured-play-badge">
+              <div class="featured-play-circle" title="Play Featured Record">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:20px;height:20px;margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </div>
+            </div>
+          </div>
+          <div class="featured-hero-content">
+            <div class="featured-kicker-row">
+              <span class="featured-kicker-badge" id="featuredKickerBadge">✦ FEATURED SELECTION</span>
+            </div>
+            <h2 class="featured-hero-title" id="featuredHeroTitle">Title</h2>
+            <p class="featured-hero-desc" id="featuredHeroDesc">Description</p>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:6px;flex-wrap:wrap;">
+              <a href="#" class="featured-hero-cta" id="featuredHeroPlayBtn">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="width:13px;height:13px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Watch Feature</span>
+              </a>
+              <span class="catalog-count-label" id="featuredHeroMeta">0 views</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Discovery Sub-Bar (Filters for Recently Added, Most Watched, Continue Watching) -->
+      <div class="discovery-subbar" id="discoverySubbar">
+        <div class="discovery-filters" id="discoveryFilters">
+          <button type="button" class="discovery-filter-btn active" data-discovery="all" id="btnFilterAll">
+            <span>All Catalog</span>
+          </button>
+          <button type="button" class="discovery-filter-btn" data-discovery="recent" id="btnFilterRecent">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Recently Added</span>
+          </button>
+          <button type="button" class="discovery-filter-btn" data-discovery="popular" id="btnFilterPopular">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path></svg>
+            <span>Most Watched</span>
+          </button>
+          <button type="button" class="discovery-filter-btn" data-discovery="continue" id="filterContinueWatching" style="display:none;">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Continue Watching</span>
+          </button>
+        </div>
+        <div class="catalog-count-label" id="catalogCountLabel">
+          Showing 0 records
+        </div>
+      </div>
+
+      <!-- Archive Feed (Endless Video Catalog Grid Directly Below Category Strip) -->
+      <section class="archive-section" id="archiveFeedSection">
+
+        <!-- Dynamic Multi-Column Video Cards Grid -->
+        <div class="video-grid" id="videoGrid">
+          <!-- Populated by index.js -->
+        </div>
+
+        <!-- Load More Button Wrap (Graceful Pagination) -->
+        <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+          <button type="button" class="load-more-btn" id="btnLoadMore">
+            <span>Load More Videos</span>
+            <span class="load-more-count" id="loadMoreCount"></span>
+          </button>
+        </div>
+
+        <!-- Infinite Scroll Sentinel -->
+        <div class="scroll-loader" id="scrollLoader">
+          <div class="pulse-indicator"></div>
+          <span class="loader-text">loading next records...</span>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Development Toast Banner -->
+  <div class="dev-toast-banner" id="devToastBanner" style="display:none;">
+    <div class="dev-toast-content">
+      <span id="devToastIcon">ℹ️</span>
+      <span id="devToastText">Feature notification</span>
+    </div>
+  </div>
+
+  <script src="js/catalog-feed.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

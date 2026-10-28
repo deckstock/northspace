@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-template="crm" data-accent="slate">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether — Video Discovery & Layout Design Experiments</title>
+
+  <!-- Curated Clean Fonts matching the CRM Reference Screenshot -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & ACCENT TOKENS (Aether CRM Minimalist Foundation)
+       ========================================================================== */
+    :root {
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-mono: 'Geist Mono', 'SF Mono', Consolas, monospace;
+
+      /* Light Theme (Crisp, Neat, Breathable - Reference Screenshot) */
+      --bg-page: #f8f9fa;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f3f5;
+      --bg-pill: #f1f3f5;
+      --bg-input: #ffffff;
+
+      --border-subtle: #e9ecef;
+      --border-regular: #dee2e6;
+      --border-strong: #ced4da;
+
+      --text-main: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --text-faint: #9ca3af;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 9999px;
+
+      /* Default Accent: Monochrome Slate (like the solid black pill in screenshot) */
+      --accent: #111827;
+      --accent-hover: #000000;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(17, 24, 39, 0.07);
+    }
+
+    /* Dark Theme (Deep Obsidian, Pure Zero-Glare Minimal) */
+    html[data-theme="dark"] {
+      --bg-page: #0c0e12;
+      --bg-surface: #14171e;
+      --bg-card: #14171e;
+      --bg-subtle: #1c202a;
+      --bg-pill: #1c202a;
+      --bg-input: #14171e;
+
+      --border-subtle: #242936;
+      --border-regular: #303748;
+      --border-strong: #40495f;
+
+      --text-main: #f9fafb;
+      --text-secondary: #d1d5db;
+      --text-muted: #9ca3af;
+      --text-faint: #6b7280;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 14px 32px rgba(0, 0, 0, 0.65);
+
+      --accent: #f9fafb;
+      --accent-hover: #ffffff;
+      --accent-contrast: #0c0e12;
+      --accent-tint: rgba(249, 250, 251, 0.12);
+    }
+
+    /* Accent Presets */
+    html[data-accent="slate"][data-theme="light"] {
+      --accent: #111827;
+      --accent-hover: #000000;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(17, 24, 39, 0.08);
+    }
+    html[data-accent="slate"][data-theme="dark"] {
+      --accent: #ffffff;
+      --accent-hover: #e5e7eb;
+      --accent-contrast: #111827;
+      --accent-tint: rgba(255, 255, 255, 0.15);
+    }
+    html[data-accent="indigo"] {
+      --accent: #3b5bdb;
+      --accent-hover: #2b44ab;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(59, 91, 219, 0.1);
+    }
+    html[data-accent="amber"] {
+      --accent: #d97706;
+      --accent-hover: #b45309;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(217, 119, 6, 0.1);
+    }
+    html[data-accent="emerald"] {
+      --accent: #059669;
+      --accent-hover: #047857;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(5, 150, 105, 0.1);
+    }
+    html[data-accent="crimson"] {
+      --accent: #e11d48;
+      --accent-hover: #be123c;
+      --accent-contrast: #ffffff;
+      --accent-tint: rgba(225, 29, 72, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-top: 56px; /* Space for Top Lab Bar */
+      min-height: 100vh;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    /* ==========================================================================
+       TOP LAB EXPERIMENT CONTROL BAR (Fixed at the very top)
+       ========================================================================== */
+    .lab-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lab-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lab-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lab-title-badge span.name {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .lab-title-badge span.pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      font-weight: 500;
+    }
+
+    .lab-template-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-subtle);
+      padding: 3px;
+      border-radius: var(--radius-pill);
+    }
+
+    .lab-tmpl-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .lab-tmpl-btn.active {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lab-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .lab-accent-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lab-accent-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s ease;
+    }
+
+    .lab-accent-dot:hover {
+      transform: scale(1.15);
+    }
+
+    .lab-accent-dot.active {
+      border-color: var(--text-main);
+      box-shadow: 0 0 0 2px var(--bg-surface);
+    }
+
+    .dot-slate { background: #111827; }
+    .dot-indigo { background: #3b5bdb; }
+    .dot-amber { background: #d97706; }
+    .dot-emerald { background: #059669; }
+    .dot-crimson { background: #e11d48; }
+
+    .lab-theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .lab-back-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      transition: all 0.15s ease;
+    }
+
+    .lab-back-link:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    /* Template Visibility */
+    .template-view {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .template-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       SHARED AETHER BRAND HEADER (Present in all designs)
+       ========================================================================== */
+    .aether-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 36px;
+    }
+
+    .aether-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .aether-branding {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .aether-brand-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .aether-brand-title span.sub {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-left: 6px;
+      color: var(--text-muted);
+    }
+
+    .aether-tag-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      font-weight: 500;
+    }
+
+    .aether-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .aether-pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.15s ease;
+    }
+
+    .aether-pill-link:hover {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
+    }
+
+    /* ==========================================================================
+       SHARED METRIC STATS CARDS (Exact match from the screenshot)
+       ========================================================================== */
+    .metrics-row {
+      max-width: 1400px;
+      margin: 28px auto 0;
+      padding: 0 36px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.15;
+      margin: 10px 0 4px;
+    }
+
+    .metric-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       SHARED PILL NAVIGATION TABS (Exact match from reference screenshot)
+       ========================================================================== */
+    .tabs-section {
+      max-width: 1400px;
+      margin: 24px auto 0;
+      padding: 0 36px;
+    }
+
+    .pill-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .pill-tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .pill-tab:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .pill-tab.active {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pill-tab span.count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+    }
+
+    .pill-tab.active span.count {
+      background: rgba(255, 255, 255, 0.22);
+      color: var(--accent-contrast);
+    }
+
+    /* ==========================================================================
+       SHARED SEARCH & ACTION TOOLBAR (Pill inputs, selects, actions)
+       ========================================================================== */
+    .toolbar-section {
+      max-width: 1400px;
+      margin: 18px auto 0;
+      padding: 0 36px;
+    }
+
+    .toolbar-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-pill-box {
+      position: relative;
+      flex: 1;
+      max-width: 440px;
+    }
+
+    .search-pill-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-pill-input {
+      width: 100%;
+      padding: 9px 16px 9px 40px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .search-pill-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-select {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-family: var(--font-body);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-action-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-action-primary:hover {
+      opacity: 0.92;
+    }
+
+    .btn-action-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action-outline:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       LAYOUT 1: "THE AETHER CRM DISCOVERY PORTAL" (Direct 1:1 Reference)
+       ========================================================================== */
+    .l1-content-wrap {
+      max-width: 1400px;
+      margin: 20px auto 40px;
+      padding: 0 36px;
+    }
+
+    /* Mode 1: Clean Cards Grid */
+    .l1-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 18px;
+    }
+
+    .l1-video-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .l1-video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-regular);
+    }
+
+    .l1-thumb-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .l1-thumb-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .l1-video-card:hover .l1-thumb-stage img {
+      transform: scale(1.04);
+    }
+
+    .l1-duration-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.82);
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+      backdrop-filter: blur(4px);
+    }
+
+    .l1-category-pill {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.9);
+      color: #111827;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+
+    html[data-theme="dark"] .l1-category-pill {
+      background: rgba(20, 23, 30, 0.9);
+      color: #f9fafb;
+    }
+
+    .l1-card-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .l1-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .l1-card-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .l1-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .l1-card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.15s ease;
+    }
+
+    .l1-video-card:hover .l1-card-action-btn {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
+    }
+
+    /* Mode 2: Clean Table View (Exact Header Row from the Reference Screenshot) */
+    .l1-table-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-top: 18px;
+    }
+
+    .l1-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .l1-table thead tr {
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .l1-table th {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 12px 18px;
+    }
+
+    .l1-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .l1-table tbody tr:hover {
+      background: var(--bg-subtle);
+    }
+
+    .l1-table-thumb {
+      width: 90px;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+      display: block;
+    }
+
+    .l1-table-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ==========================================================================
+       LAYOUT 2: "THE EDITORIAL CINEMA STUDIO" (Dual Stage: Theater + Moving Rail)
+       ========================================================================== */
+    .l2-stage-wrap {
+      max-width: 1400px;
+      margin: 28px auto 40px;
+      padding: 0 36px;
+    }
+
+    .l2-dual-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    /* Big Screen Theater */
+    .l2-theater-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .l2-theater-screen {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .l2-theater-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l2-screen-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .l2-center-play-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .l2-theater-screen:hover .l2-center-play-circle {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .l2-theater-details {
+      padding: 24px 28px;
+    }
+
+    .l2-meta-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .l2-film-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .l2-film-desc {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    /* Right Moving Rail */
+    .l2-rail-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      max-height: 620px;
+    }
+
+    .l2-rail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 14px;
+    }
+
+    .l2-rail-heading {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .l2-rail-scroll {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 4px;
+    }
+
+    .l2-rail-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      background: var(--bg-subtle);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .l2-rail-item:hover, .l2-rail-item.active {
+      border-color: var(--accent);
+      background: var(--accent-tint);
+    }
+
+    .l2-rail-thumb {
+      width: 86px;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .l2-rail-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l2-rail-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .l2-rail-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .l2-rail-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Down Section: Category Carousel */
+    .l2-down-section {
+      margin-top: 36px;
+    }
+
+    .l2-section-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .l2-category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .l2-cat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .l2-cat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .l2-cat-thumb {
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .l2-cat-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l2-cat-body {
+      padding: 16px;
+    }
+
+    .l2-cat-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .l2-cat-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       LAYOUT 3: "THE STREAMING SHELVES" (Apple TV / Criterion Cinematic Rails)
+       ========================================================================== */
+    .l3-shelves-wrap {
+      max-width: 1400px;
+      margin: 24px auto 40px;
+      padding: 0 36px;
+    }
+
+    .l3-billboard {
+      position: relative;
+      aspect-ratio: 21 / 9;
+      min-height: 380px;
+      max-height: 440px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 36px;
+      background: #000;
+    }
+
+    .l3-billboard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l3-billboard-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .l3-billboard-content {
+      position: absolute;
+      top: 50%;
+      left: 48px;
+      transform: translateY(-50%);
+      max-width: 580px;
+      color: #ffffff;
+    }
+
+    .l3-billboard-tag {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      padding: 3px 9px;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .l3-billboard-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .l3-billboard-desc {
+      font-size: 13.5px;
+      color: #e5e7eb;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .l3-shelf-block {
+      margin-bottom: 32px;
+    }
+
+    .l3-shelf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .l3-shelf-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .l3-shelf-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+
+    .l3-shelf-card {
+      flex: 0 0 240px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .l3-shelf-card:hover {
+      transform: scale(1.03);
+    }
+
+    .l3-shelf-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .l3-shelf-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l3-shelf-info {
+      padding: 12px 14px;
+    }
+
+    .l3-shelf-video-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .l3-shelf-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       LAYOUT 4: "THE COMPACT MONOSPACE UTILITY" (Linear / High-Density Curation)
+       ========================================================================== */
+    .l4-utility-wrap {
+      max-width: 1400px;
+      margin: 24px auto 40px;
+      padding: 0 36px;
+    }
+
+    .l4-dense-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .l4-row-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .l4-row-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-subtle);
+    }
+
+    .l4-left-col {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .l4-thumb {
+      width: 76px;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .l4-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .l4-title-group {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .l4-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .l4-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .l4-right-col {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       POPUP VIDEO PLAYER MODAL
+       ========================================================================== */
+    .video-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(6px);
+    }
+
+    .video-modal-backdrop.open {
+      display: flex;
+    }
+
+    .video-modal-card {
+      width: 100%;
+      max-width: 960px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-modal-header {
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .video-modal-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .video-modal-close {
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .video-modal-close:hover {
+      color: var(--text-main);
+    }
+
+    .video-modal-stage {
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-modal-stage video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .l1-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .l2-dual-grid { grid-template-columns: 1fr; }
+      .l2-category-grid { grid-template-columns: repeat(2, 1fr); }
+      .lab-bar { padding: 0 14px; }
+      .aether-header, .metrics-row, .tabs-section, .toolbar-section, .l1-content-wrap, .l2-stage-wrap, .l3-shelves-wrap, .l4-utility-wrap { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP LAB EXPERIMENT CONTROL BAR (Click to switch templates & themes)
+       ========================================================================== -->
+  <header class="lab-bar">
+    <div class="lab-left">
+      <div class="lab-title-badge">
+        <span class="name">Aether</span>
+        <span class="pill">UI EXPERIMENT LAB</span>
+      </div>
+
+      <!-- 4 Distinct Layout Selectors -->
+      <div class="lab-template-pills">
+        <button type="button" class="lab-tmpl-btn active" data-tmpl="crm">1. CRM Catalog Portal</button>
+        <button type="button" class="lab-tmpl-btn" data-tmpl="editorial">2. Editorial Theater &amp; Rail</button>
+        <button type="button" class="lab-tmpl-btn" data-tmpl="shelves">3. Streaming Shelves</button>
+        <button type="button" class="lab-tmpl-btn" data-tmpl="utility">4. Dense Utility</button>
+      </div>
+    </div>
+
+    <div class="lab-right">
+      <!-- Accent Palette Dots -->
+      <div class="lab-accent-group" title="Select Accent Color">
+        <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted);margin-right:2px;">ACCENT:</span>
+        <div class="lab-accent-dot dot-slate active" data-accent="slate" title="Monochrome Slate (Reference Screenshot)"></div>
+        <div class="lab-accent-dot dot-indigo" data-accent="indigo" title="Indigo Blue"></div>
+        <div class="lab-accent-dot dot-amber" data-accent="amber" title="Warm Amber"></div>
+        <div class="lab-accent-dot dot-emerald" data-accent="emerald" title="Emerald Forest"></div>
+        <div class="lab-accent-dot dot-crimson" data-accent="crimson" title="Crimson Rose"></div>
+      </div>
+
+      <!-- Light / Dark Mode Toggle -->
+      <button type="button" class="lab-theme-toggle" id="labThemeToggleBtn">
+        <span id="labThemeIcon">🌙</span>
+        <span id="labThemeText">Dark</span>
+      </button>
+
+      <a href="index.html" class="lab-back-link">&larr; Live Discovery</a>
+      <a href="admin.html" class="lab-back-link">Admin CRM</a>
+    </div>
+  </header>
+
+
+  <!-- ==========================================================================
+       LAYOUT 1: "THE AETHER CRM CATALOG PORTAL" (Direct Evolution of Reference Screenshot)
+       ========================================================================== -->
+  <div class="template-view active" id="viewCrm">
+
+    <!-- Top Aether Branding Bar -->
+    <header class="aether-header">
+      <div class="aether-header-inner">
+        <div class="aether-branding">
+          <a href="#" class="aether-brand-title">Aether <span class="sub">stream</span></a>
+          <span class="aether-tag-badge">DISCOVERY ARCHIVE &amp; CATALOG SYSTEM</span>
+        </div>
+        <div class="aether-header-right">
+          <a href="admin.html" class="aether-pill-link">&larr; Content CRM</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 4 Clean Stat Metric Cards (Exact structure from Reference Screenshot) -->
+    <section class="metrics-row">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Total Catalog Assets</span>
+          <span class="metric-value" id="m1Total">84</span>
+          <span class="metric-hint">Active discovery records</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Playable Stream Reels</span>
+          <span class="metric-value" id="m1Streams">84</span>
+          <span class="metric-hint">High-bitrate MP4 &amp; embed links</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Categories &amp; Feeds</span>
+          <span class="metric-value">7</span>
+          <span class="metric-hint">Custom genres with images</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Max Presentation Grade</span>
+          <span class="metric-value" style="color:var(--accent);">4K RAW</span>
+          <span class="metric-hint">35mm cine &amp; HDR telemetry</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Pill Tabs (Exact Black Active Pill Style) -->
+    <section class="tabs-section">
+      <div class="pill-tabs-bar" id="l1FilterTabs">
+        <button type="button" class="pill-tab active" data-cat="all">All Catalog Assets <span class="count">84</span></button>
+        <button type="button" class="pill-tab" data-cat="cinema">Cinema &amp; 35mm <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="docs">Documentaries <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="trending">Trending Now <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="leaks">Aggregates &amp; Leaks <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="experimental">Experimental Motion <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="curated">Staff Curated <span class="count">12</span></button>
+        <button type="button" class="pill-tab" data-cat="shorts">Ultra-Shorts <span class="count">12</span></button>
+      </div>
+    </section>
+
+    <!-- Search Bar & View Mode Switcher -->
+    <section class="toolbar-section">
+      <div class="toolbar-card">
+        <div class="search-pill-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="l1SearchInput" class="search-pill-input" placeholder="Search catalog by title, id, or tag...">
+        </div>
+
+        <div class="toolbar-actions">
+          <select id="l1GenreSelect" class="pill-select">
+            <option value="all">All Genres</option>
+            <option value="cinema">Cinema &amp; 35mm</option>
+            <option value="docs">Documentaries</option>
+            <option value="trending">Trending Now</option>
+            <option value="leaks">Aggregates &amp; Leaks</option>
+            <option value="experimental">Experimental Motion</option>
+            <option value="curated">Staff Curated</option>
+            <option value="shorts">Ultra-Shorts</option>
+          </select>
+
+          <!-- View Mode Toggle (Grid vs Clean Table) -->
+          <button type="button" class="btn-action-outline" id="l1ViewToggleBtn">
+            <span id="l1ViewToggleText">View: Data Table ☰</span>
+          </button>
+
+          <button type="button" class="btn-action-primary" id="l1FeaturedWatchBtn">
+            <span>&#9658; Watch Spotlight</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area: Cards Grid OR Data Table -->
+    <main class="l1-content-wrap">
+      
+      <!-- View Mode A: Cards Grid -->
+      <div class="l1-cards-grid" id="l1CardsContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- View Mode B: Clean Data Table (Exact table headers from screenshot) -->
+      <div class="l1-table-card" id="l1TableContainer" style="display: none;">
+        <table class="l1-table">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Preview</th>
+              <th>Title &amp; Identifier</th>
+              <th>Category</th>
+              <th>Playback Source</th>
+              <th>Stats</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="l1TableBody">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- ==========================================================================
+       LAYOUT 2: "THE EDITORIAL CINEMA STUDIO" (Dual Stage: Theater + Moving Rail)
+       ========================================================================== -->
+  <div class="template-view" id="viewEditorial">
+
+    <header class="aether-header">
+      <div class="aether-header-inner">
+        <div class="aether-branding">
+          <a href="#" class="aether-brand-title">Aether <span class="sub">theater</span></a>
+          <span class="aether-tag-badge">DUAL-PANE CINEMATIC DISCOVERY</span>
+        </div>
+        <div class="aether-header-right">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">AUTO-ADVANCE ACTIVE</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="l2-stage-wrap">
+      
+      <div class="l2-dual-grid">
+        <!-- Big Screen Showcase -->
+        <div class="l2-theater-box">
+          <div class="l2-theater-screen" id="l2MainScreen">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="" id="l2HeroImg">
+            <div class="l2-screen-scrim"></div>
+            <div class="l2-center-play-circle" id="l2CenterPlay">
+              <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px;"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+            </div>
+          </div>
+          <div class="l2-theater-details">
+            <div class="l2-meta-pills-row">
+              <span class="aether-tag-badge" id="l2HeroBadge">CINEMA &amp; 35MM</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);" id="l2HeroDuration">08:07</span>
+            </div>
+            <h1 class="l2-film-title" id="l2HeroTitle">Midnight Solitude: 35mm Raw Cine Reel</h1>
+            <p class="l2-film-desc" id="l2HeroDesc">Shot on Kodak Double-X 35mm film through vintage anamorphic optics. An atmospheric study of solitary night architecture and rain-slicked geometry.</p>
+            <button type="button" class="btn-action-primary" id="l2WatchNowBtn">&#9658; Stream Full Reel</button>
+          </div>
+        </div>
+
+        <!-- Right Side Moving / Curated Up-Down Rail -->
+        <div class="l2-rail-box">
+          <div class="l2-rail-header">
+            <span class="l2-rail-heading">Queued Feature Reels</span>
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);" id="l2RailCount">12 Videos</span>
+          </div>
+          <div class="l2-rail-scroll" id="l2RailList">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Down Section: Dynamic Categories with Images -->
+      <div class="l2-down-section">
+        <h2 class="l2-section-title">Curated Channels &amp; Genres</h2>
+        <div class="l2-category-grid" id="l2CategoryGrid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================================
+       LAYOUT 3: "THE STREAMING SHELVES" (Apple TV / Criterion Cinematic Rails)
+       ========================================================================== -->
+  <div class="template-view" id="viewShelves">
+
+    <header class="aether-header">
+      <div class="aether-header-inner">
+        <div class="aether-branding">
+          <a href="#" class="aether-brand-title">Aether <span class="sub">shelves</span></a>
+          <span class="aether-tag-badge">HORIZONTAL PANORAMA TRACKS</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="l3-shelves-wrap">
+
+      <!-- Panoramic Billboard Hero -->
+      <div class="l3-billboard" id="l3Billboard">
+        <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80" alt="">
+        <div class="l3-billboard-scrim"></div>
+        <div class="l3-billboard-content">
+          <span class="l3-billboard-tag">TRENDING HEADLINER</span>
+          <h1 class="l3-billboard-title">Dune Patrol: High-Speed Sand Sprint Footage</h1>
+          <p class="l3-billboard-desc">Custom 6S FPV race drone tracking stripped rally platforms tearing across shifting Saharan ridge lines in continuous high-frame-rate capture.</p>
+          <button type="button" class="btn-action-primary" id="l3BillboardBtn">&#9658; Play Now</button>
+        </div>
+      </div>
+
+      <!-- Shelf Tracks -->
+      <div id="l3ShelvesContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================================
+       LAYOUT 4: "THE COMPACT MONOSPACE UTILITY" (Linear / High-Density Curation)
+       ========================================================================== -->
+  <div class="template-view" id="viewUtility">
+
+    <header class="aether-header">
+      <div class="aether-header-inner">
+        <div class="aether-branding">
+          <a href="#" class="aether-brand-title">Aether <span class="sub">utility</span></a>
+          <span class="aether-tag-badge">HIGH-DENSITY DATA ARCHIVE</span>
+        </div>
+        <div class="aether-header-right">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">FAST KEYBOARD NAVIGATION</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="l4-utility-wrap">
+      
+      <div class="toolbar-card" style="margin-bottom: 20px;">
+        <div class="search-pill-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="l4SearchInput" class="search-pill-input" placeholder="Type to filter records (press / to focus)...">
+        </div>
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);" id="l4CountLabel">Showing 28 Records</span>
+      </div>
+
+      <div class="l4-dense-list" id="l4ListContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================================
+       CLEAN VIDEO PLAYER MODAL (Plays real streams)
+       ========================================================================== -->
+  <div class="video-modal-backdrop" id="videoModal">
+    <div class="video-modal-card">
+      <div class="video-modal-header">
+        <span class="video-modal-title" id="modalVideoTitle">Video Player</span>
+        <button type="button" class="video-modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="video-modal-stage">
+        <video id="modalVideoPlayer" controls playsinline></video>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       DATASET & INTERACTION CONTROLLER
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Rich Curated Catalog Data with Real Public Video Streams
+      const STREAM_URLS = [
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+      ];
+
+      const CATEGORIES = [
+        { slug: "cinema", name: "Cinema & 35mm", desc: "Raw 35mm cine reels, vintage anamorphic glass, and atmospheric night architecture.", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" },
+        { slug: "docs", name: "Documentaries", desc: "High-latitude polar expeditions, brutalist design archives, and deep-sea telemetry.", img: "https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?auto=format&fit=crop&w=800&q=80" },
+        { slug: "trending", name: "Trending Now", desc: "High-velocity FPV drone runs, dry lake speed sprints, and viral broadcasts.", img: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=800&q=80" },
+        { slug: "leaks", name: "Aggregates & Leaks", desc: "Confidential hardware benchmarks, silicon micro-foundries, and robotics telemetry.", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" },
+        { slug: "experimental", name: "Experimental Motion", desc: "Parametric geometry, micro-gravity acoustic levitation, and generative kinetic art.", img: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f9?auto=format&fit=crop&w=800&q=80" },
+        { slug: "curated", name: "Staff Curated", desc: "Hand-picked audio-visual journeys, rain reflections, and stereophonic transit.", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80" },
+        { slug: "shorts", name: "Ultra-Shorts", desc: "Fast 15-second visual dynamic simulations, chrome loops, and micro narratives.", img: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?auto=format&fit=crop&w=800&q=80" }
+      ];
+
+      const RAW_REELS = [
+        { id: "vid_01", title: "Midnight Solitude: 35mm Raw Cine Reel", cat: "cinema", dur: "08:07", views: "820K", date: "2 days ago", thumb: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80", desc: "Shot on Kodak Double-X 35mm film through vintage anamorphic optics. An atmospheric study of solitary night architecture." },
+        { id: "vid_02", title: "Anamorphic Night Reflections: Tokyo Rain", cat: "cinema", dur: "11:24", views: "640K", date: "4 days ago", thumb: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=80", desc: "Heavy rain reflections across Shibuya crossing captured with blue-streak flare anamorphic glass." },
+        { id: "vid_03", title: "The Concrete Cathedral: 70mm Architecture", cat: "cinema", dur: "06:45", views: "390K", date: "1 week ago", thumb: "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=1200&q=80", desc: "Large-format 70mm slow pan across Eastern European concrete monuments, exploring geometric symmetry." },
+        { id: "vid_04", title: "Echoes of the Arctic: Uncharted Glacial Passes", cat: "docs", dur: "14:18", views: "710K", date: "3 days ago", thumb: "https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?auto=format&fit=crop&w=1200&q=80", desc: "High-latitude aerial LiDAR and expedition scans tracking crystalline glacial fractures across polar archipelagos." },
+        { id: "vid_05", title: "Deep Sea Bioluminescence Captured in Ultra ISO", cat: "docs", dur: "09:32", views: "520K", date: "5 days ago", thumb: "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&w=1200&q=80", desc: "Deep-trench robotic submersible probe capturing organic light organisms at 4,000 meters below sea level." },
+        { id: "vid_06", title: "Overland Safari: Tracking Big Cats at Twilight", cat: "docs", dur: "12:05", views: "430K", date: "1 week ago", thumb: "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1200&q=80", desc: "Extreme telephoto twilight observation following nocturnal apex predators across savanna drainage basins." },
+        { id: "vid_07", title: "Dune Patrol: High-Speed Sand Sprint Footage", cat: "trending", dur: "05:14", views: "1.2M", date: "Yesterday", thumb: "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80", desc: "Custom 6S FPV race drone tracking stripped rally platforms tearing across shifting Saharan ridge lines." },
+        { id: "vid_08", title: "High-Altitude Glider: Alps Cross Country Flight", cat: "trending", dur: "10:48", views: "890K", date: "3 days ago", thumb: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80", desc: "Cockpit telemetry and panoramic canopy capture gliding silently over snowbound 4,000-meter peaks." },
+        { id: "vid_09", title: "Stunt Driver Sunset Run Across Mojave Dry Lake", cat: "trending", dur: "04:30", views: "980K", date: "4 days ago", thumb: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80", desc: "Precision twin-turbo test run pushing mechanical traction thresholds against endless alkali salt flats." },
+        { id: "vid_10", title: "Silicon Valleys: Inside Unreleased Hardware Leaks", cat: "leaks", dur: "07:22", views: "670K", date: "2 days ago", thumb: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", desc: "High-resolution macro microscopy and confidential engineering layout telemetry from silicon foundries." },
+        { id: "vid_11", title: "Confidential Benchmark Test: Quantum Core 9X", cat: "leaks", dur: "06:15", views: "490K", date: "5 days ago", thumb: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80", desc: "Superconducting cryogenic processor yields against theoretical thermal conductivity limits." },
+        { id: "vid_12", title: "Internal Footage: Robotic Assembly Line Sprint", cat: "leaks", dur: "03:55", views: "580K", date: "1 week ago", thumb: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80", desc: "Autonomous multi-axis industrial articulated arms synchronizing high-tolerance chassis spot welds." },
+        { id: "vid_13", title: "Geometric Choreography & Kinetic Architecture", cat: "experimental", dur: "08:40", views: "340K", date: "4 days ago", thumb: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f9?auto=format&fit=crop&w=1200&q=80", desc: "A study in rhythmic spatial transformations exploring parametric brutalism and light interplay." },
+        { id: "vid_14", title: "Micro-Gravity Water Droplets in High Speed 4000FPS", cat: "experimental", dur: "04:12", views: "410K", date: "6 days ago", thumb: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80", desc: "Phantom camera footage documenting surface tension oscillations of pristine fluid spheres." },
+        { id: "vid_15", title: "Tokyo Monorail at 04:00 AM — Pure Atmosphere", cat: "curated", dur: "15:20", views: "850K", date: "3 days ago", thumb: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80", desc: "Binaural ambient transit recording through the misty elevated waterways of Minato, capturing reflections." },
+        { id: "vid_16", title: "Neon Reflections: Rainy Boulevard Walk", cat: "curated", dur: "18:45", views: "920K", date: "5 days ago", thumb: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80", desc: "Unfiltered stereophonic journey through rain-slicked asphalt canyons and diffused storefronts." }
+      ];
+
+      // Assign streams
+      RAW_REELS.forEach((reel, idx) => {
+        reel.stream = STREAM_URLS[idx % STREAM_URLS.length];
+      });
+
+      // --- Theme & Accent Controllers ---
+      const html = document.documentElement;
+
+      // Theme toggle
+      const themeToggleBtn = document.getElementById('labThemeToggleBtn');
+      const themeIcon = document.getElementById('labThemeIcon');
+      const themeText = document.getElementById('labThemeText');
+
+      function updateThemeUI(theme) {
+        html.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Light';
+        } else {
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Dark';
+        }
+      }
+
+      const savedTheme = localStorage.getItem('aether_theme_lab') || 'light';
+      updateThemeUI(savedTheme);
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const current = html.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          updateThemeUI(next);
+          localStorage.setItem('aether_theme_lab', next);
+        });
+      }
+
+      // Accent dots
+      const accentDots = document.querySelectorAll('.lab-accent-dot');
+      accentDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          accentDots.forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+          const accent = dot.getAttribute('data-accent');
+          html.setAttribute('data-accent', accent);
+        });
+      });
+
+      // Template switcher
+      const tmplButtons = document.querySelectorAll('.lab-tmpl-btn');
+      const views = {
+        crm: document.getElementById('viewCrm'),
+        editorial: document.getElementById('viewEditorial'),
+        shelves: document.getElementById('viewShelves'),
+        utility: document.getElementById('viewUtility')
+      };
+
+      tmplButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tmplButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.getAttribute('data-tmpl');
+          html.setAttribute('data-template', target);
+
+          Object.keys(views).forEach(k => {
+            if (views[k]) views[k].classList.remove('active');
+          });
+          if (views[target]) views[target].classList.add('active');
+        });
+      });
+
+      // --- Video Playback Modal ---
+      const modal = document.getElementById('videoModal');
+      const modalTitle = document.getElementById('modalVideoTitle');
+      const modalPlayer = document.getElementById('modalVideoPlayer');
+      const modalClose = document.getElementById('modalCloseBtn');
+
+      function openPlayer(title, streamUrl, poster) {
+        if (!modal) return;
+        modalTitle.textContent = title || 'Aether Video Stream';
+        modalPlayer.src = streamUrl;
+        if (poster) modalPlayer.poster = poster;
+        modalPlayer.load();
+        modalPlayer.play().catch(() => {});
+        modal.classList.add('open');
+      }
+
+      function closePlayer() {
+        if (!modal) return;
+        modalPlayer.pause();
+        modalPlayer.src = '';
+        modal.classList.remove('open');
+      }
+
+      if (modalClose) modalClose.addEventListener('click', closePlayer);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closePlayer();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closePlayer();
+        }
+      });
+
+      // ==========================================================================
+      // RENDER LAYOUT 1: CRM CATALOG PORTAL
+      // ==========================================================================
+      const l1CardsContainer = document.getElementById('l1CardsContainer');
+      const l1TableContainer = document.getElementById('l1TableContainer');
+      const l1TableBody = document.getElementById('l1TableBody');
+      const l1FilterTabs = document.getElementById('l1FilterTabs');
+      const l1SearchInput = document.getElementById('l1SearchInput');
+      const l1GenreSelect = document.getElementById('l1GenreSelect');
+      const l1ViewToggleBtn = document.getElementById('l1ViewToggleBtn');
+      const l1ViewToggleText = document.getElementById('l1ViewToggleText');
+
+      let currentL1Cat = 'all';
+      let currentL1Search = '';
+      let isL1TableView = false;
+
+      function renderL1() {
+        const filtered = RAW_REELS.filter(item => {
+          const matchCat = currentL1Cat === 'all' || item.cat === currentL1Cat;
+          const matchSearch = !currentL1Search || item.title.toLowerCase().includes(currentL1Search);
+          return matchCat && matchSearch;
+        });
+
+        // 1. Render Cards Grid
+        if (l1CardsContainer) {
+          l1CardsContainer.innerHTML = '';
+          filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'l1-video-card';
+            card.innerHTML = `
+              <div class="l1-thumb-stage">
+                <img src="${item.thumb}" alt="${item.title}" loading="lazy">
+                <span class="l1-category-pill">${item.cat}</span>
+                <span class="l1-duration-badge">${item.dur}</span>
+              </div>
+              <div class="l1-card-body">
+                <div>
+                  <h3 class="l1-card-title">${item.title}</h3>
+                  <div class="l1-card-meta">
+                    <span>${item.views}</span>
+                    <span>&bull;</span>
+                    <span>${item.date}</span>
+                  </div>
+                </div>
+                <div class="l1-card-footer">
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${item.id}</span>
+                  <button type="button" class="l1-card-action-btn">&#9658; Stream</button>
+                </div>
+              </div>
+            `;
+            card.addEventListener('click', () => {
+              openPlayer(item.title, item.stream, item.thumb);
+            });
+            l1CardsContainer.appendChild(card);
+          });
+        }
+
+        // 2. Render Table View
+        if (l1TableBody) {
+          l1TableBody.innerHTML = '';
+          filtered.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>
+                <div class="l1-table-thumb">
+                  <img src="${item.thumb}" alt="">
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:600;color:var(--text-main);">${item.title}</div>
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${item.id}</div>
+              </td>
+              <td>
+                <span class="aether-tag-badge">${item.cat}</span>
+              </td>
+              <td>
+                <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">MP4 Native Stream</span>
+              </td>
+              <td>
+                <div style="font-size:12px;">${item.views}</div>
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${item.dur}</div>
+              </td>
+              <td>
+                <button type="button" class="btn-action-primary" style="padding:5px 12px;font-size:11px;">&#9658; Play</button>
+              </td>
+            `;
+            tr.addEventListener('click', () => {
+              openPlayer(item.title, item.stream, item.thumb);
+            });
+            l1TableBody.appendChild(tr);
+          });
+        }
+      }
+
+      // Filter tab clicks
+      if (l1FilterTabs) {
+        l1FilterTabs.querySelectorAll('.pill-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            l1FilterTabs.querySelectorAll('.pill-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentL1Cat = tab.getAttribute('data-cat');
+            if (l1GenreSelect) l1GenreSelect.value = currentL1Cat;
+            renderL1();
+          });
+        });
+      }
+
+      if (l1SearchInput) {
+        l1SearchInput.addEventListener('input', (e) => {
+          currentL1Search = e.target.value.trim().toLowerCase();
+          renderL1();
+        });
+      }
+
+      if (l1GenreSelect) {
+        l1GenreSelect.addEventListener('change', (e) => {
+          currentL1Cat = e.target.value;
+          if (l1FilterTabs) {
+            l1FilterTabs.querySelectorAll('.pill-tab').forEach(t => {
+              t.classList.toggle('active', t.getAttribute('data-cat') === currentL1Cat);
+            });
+          }
+          renderL1();
+        });
+      }
+
+      // Toggle between Cards Grid and Data Table
+      if (l1ViewToggleBtn) {
+        l1ViewToggleBtn.addEventListener('click', () => {
+          isL1TableView = !isL1TableView;
+          if (isL1TableView) {
+            l1CardsContainer.style.display = 'none';
+            l1TableContainer.style.display = 'block';
+            l1ViewToggleText.textContent = 'View: Cards Grid ⊞';
+          } else {
+            l1CardsContainer.style.display = 'grid';
+            l1TableContainer.style.display = 'none';
+            l1ViewToggleText.textContent = 'View: Data Table ☰';
+          }
+        });
+      }
+
+      const l1FeaturedWatchBtn = document.getElementById('l1FeaturedWatchBtn');
+      if (l1FeaturedWatchBtn) {
+        l1FeaturedWatchBtn.addEventListener('click', () => {
+          const featured = RAW_REELS[0];
+          openPlayer(featured.title, featured.stream, featured.thumb);
+        });
+      }
+
+      // ==========================================================================
+      // RENDER LAYOUT 2: EDITORIAL THEATER & RAIL
+      // ==========================================================================
+      let activeL2Index = 0;
+      const l2HeroImg = document.getElementById('l2HeroImg');
+      const l2HeroTitle = document.getElementById('l2HeroTitle');
+      const l2HeroDesc = document.getElementById('l2HeroDesc');
+      const l2HeroBadge = document.getElementById('l2HeroBadge');
+      const l2HeroDuration = document.getElementById('l2HeroDuration');
+      const l2CenterPlay = document.getElementById('l2CenterPlay');
+      const l2WatchNowBtn = document.getElementById('l2WatchNowBtn');
+      const l2RailList = document.getElementById('l2RailList');
+      const l2CategoryGrid = document.getElementById('l2CategoryGrid');
+
+      function updateL2Hero(idx) {
+        activeL2Index = idx;
+        const item = RAW_REELS[idx];
+        if (!item) return;
+
+        if (l2HeroImg) l2HeroImg.src = item.thumb;
+        if (l2HeroTitle) l2HeroTitle.textContent = item.title;
+        if (l2HeroDesc) l2HeroDesc.textContent = item.desc;
+        if (l2HeroBadge) l2HeroBadge.textContent = item.cat.toUpperCase();
+        if (l2HeroDuration) l2HeroDuration.textContent = item.dur;
+
+        // Update active rail styling
+        if (l2RailList) {
+          l2RailList.querySelectorAll('.l2-rail-item').forEach((el, i) => {
+            el.classList.toggle('active', i === idx);
+          });
+        }
+      }
+
+      function renderL2() {
+        if (l2RailList) {
+          l2RailList.innerHTML = '';
+          RAW_REELS.forEach((item, idx) => {
+            const el = document.createElement('div');
+            el.className = 'l2-rail-item' + (idx === activeL2Index ? ' active' : '');
+            el.innerHTML = `
+              <div class="l2-rail-thumb">
+                <img src="${item.thumb}" alt="">
+              </div>
+              <div class="l2-rail-info">
+                <div class="l2-rail-title">${item.title}</div>
+                <div class="l2-rail-meta">${item.cat.toUpperCase()} &bull; ${item.dur}</div>
+              </div>
+            `;
+            el.addEventListener('click', () => {
+              updateL2Hero(idx);
+            });
+            l2RailList.appendChild(el);
+          });
+        }
+
+        // Down Section: Categories Grid
+        if (l2CategoryGrid) {
+          l2CategoryGrid.innerHTML = '';
+          CATEGORIES.slice(0, 4).forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'l2-cat-card';
+            card.innerHTML = `
+              <div class="l2-cat-thumb">
+                <img src="${cat.img}" alt="${cat.name}">
+              </div>
+              <div class="l2-cat-body">
+                <div class="l2-cat-name">${cat.name}</div>
+                <div class="l2-cat-desc">${cat.desc}</div>
+              </div>
+            `;
+            card.addEventListener('click', () => {
+              // Switch to Layout 1 with this category filtered
+              const btn = document.querySelector('.lab-tmpl-btn[data-tmpl="crm"]');
+              if (btn) btn.click();
+              const tab = document.querySelector(`.pill-tab[data-cat="${cat.slug}"]`);
+              if (tab) tab.click();
+            });
+            l2CategoryGrid.appendChild(card);
+          });
+        }
+      }
+
+      const playCurrentL2 = () => {
+        const item = RAW_REELS[activeL2Index];
+        if (item) openPlayer(item.title, item.stream, item.thumb);
+      };
+
+      if (l2CenterPlay) l2CenterPlay.addEventListener('click', playCurrentL2);
+      if (l2WatchNowBtn) l2WatchNowBtn.addEventListener('click', playCurrentL2);
+
+      // ==========================================================================
+      // RENDER LAYOUT 3: STREAMING SHELVES
+      // ==========================================================================
+      const l3ShelvesContainer = document.getElementById('l3ShelvesContainer');
+      const l3BillboardBtn = document.getElementById('l3BillboardBtn');
+
+      function renderL3() {
+        if (!l3ShelvesContainer) return;
+        l3ShelvesContainer.innerHTML = '';
+
+        const shelfCategories = [
+          { title: "Cinema & 35mm Vault", cat: "cinema" },
+          { title: "Documentary Expeditions", cat: "docs" },
+          { title: "High-Velocity Trending", cat: "trending" },
+          { title: "Confidential Leaks & Hardware", cat: "leaks" }
+        ];
+
+        shelfCategories.forEach(shelf => {
+          const matching = RAW_REELS.filter(r => r.cat === shelf.cat);
+          if (matching.length === 0) return;
+
+          const block = document.createElement('div');
+          block.className = 'l3-shelf-block';
+
+          let cardsHtml = '';
+          matching.forEach(item => {
+            cardsHtml += `
+              <div class="l3-shelf-card" data-id="${item.id}">
+                <div class="l3-shelf-thumb">
+                  <img src="${item.thumb}" alt="${item.title}">
+                </div>
+                <div class="l3-shelf-info">
+                  <div class="l3-shelf-video-title">${item.title}</div>
+                  <div class="l3-shelf-meta">${item.dur} &bull; ${item.views}</div>
+                </div>
+              </div>
+            `;
+          });
+
+          block.innerHTML = `
+            <div class="l3-shelf-header">
+              <h3 class="l3-shelf-title">${shelf.title}</h3>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">${matching.length} REELS</span>
+            </div>
+            <div class="l3-shelf-track">
+              ${cardsHtml}
+            </div>
+          `;
+
+          // Bind card click
+          block.querySelectorAll('.l3-shelf-card').forEach(card => {
+            const id = card.getAttribute('data-id');
+            const item = RAW_REELS.find(r => r.id === id);
+            if (item) {
+              card.addEventListener('click', () => {
+                openPlayer(item.title, item.stream, item.thumb);
+              });
+            }
+          });
+
+          l3ShelvesContainer.appendChild(block);
+        });
+      }
+
+      if (l3BillboardBtn) {
+        l3BillboardBtn.addEventListener('click', () => {
+          const item = RAW_REELS[6]; // Trending item
+          openPlayer(item.title, item.stream, item.thumb);
+        });
+      }
+
+      // ==========================================================================
+      // RENDER LAYOUT 4: COMPACT UTILITY
+      // ==========================================================================
+      const l4ListContainer = document.getElementById('l4ListContainer');
+      const l4SearchInput = document.getElementById('l4SearchInput');
+      const l4CountLabel = document.getElementById('l4CountLabel');
+
+      let l4FilterText = '';
+
+      function renderL4() {
+        if (!l4ListContainer) return;
+        l4ListContainer.innerHTML = '';
+
+        const filtered = RAW_REELS.filter(item => {
+          return !l4FilterText ||
+                 item.title.toLowerCase().includes(l4FilterText) ||
+                 item.cat.toLowerCase().includes(l4FilterText) ||
+                 item.id.toLowerCase().includes(l4FilterText);
+        });
+
+        if (l4CountLabel) {
+          l4CountLabel.textContent = `Showing ${filtered.length} of ${RAW_REELS.length} Records`;
+        }
+
+        filtered.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'l4-row-card';
+          row.innerHTML = `
+            <div class="l4-left-col">
+              <div class="l4-thumb">
+                <img src="${item.thumb}" alt="">
+              </div>
+              <div class="l4-title-group">
+                <div class="l4-title">${item.title}</div>
+                <div class="l4-sub">${item.id} &bull; ${item.views} &bull; ${item.date}</div>
+              </div>
+            </div>
+            <div class="l4-right-col">
+              <span class="aether-tag-badge">${item.cat}</span>
+              <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">${item.dur}</span>
+              <button type="button" class="btn-action-primary" style="padding:6px 14px;font-size:11px;">&#9658; Play</button>
+            </div>
+          `;
+          row.addEventListener('click', () => {
+            openPlayer(item.title, item.stream, item.thumb);
+          });
+          l4ListContainer.appendChild(row);
+        });
+      }
+
+      if (l4SearchInput) {
+        l4SearchInput.addEventListener('input', (e) => {
+          l4FilterText = e.target.value.trim().toLowerCase();
+          renderL4();
+        });
+      }
+
+      // Shortcut key '/' to search
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          const activeTmpl = html.getAttribute('data-template');
+          if (activeTmpl === 'crm' && l1SearchInput) l1SearchInput.focus();
+          else if (activeTmpl === 'utility' && l4SearchInput) l4SearchInput.focus();
+        }
+      });
+
+      // Initial Renders
+      renderL1();
+      renderL2();
+      renderL3();
+      renderL4();
+
+    })();
+  </script>
+
+</body>
+</html>

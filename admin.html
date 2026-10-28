@@ -1,0 +1,1504 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORTHSPACE — Content CRM &amp; Video Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Admin Application Shell (Sidebar + Main Workspace) -->
+  <div class="admin-shell">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      
+      <!-- Brand & Collapse Toggle -->
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand" title="NorthSpace Stream Home">
+          <span class="brand-title">North</span>
+          <span class="brand-tm">SPACE</span>
+          <span class="brand-badge">ADMIN</span>
+        </a>
+        <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Collapse / Expand Sidebar">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-nav">
+
+        <!-- SECTION: MAIN -->
+        <div class="nav-section-label">MAIN</div>
+        
+        <button type="button" class="nav-item active" data-panel="panelOverview" id="navOverview">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span class="nav-text">Overview</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelVideos" id="navVideos">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          <span class="nav-text">Video Catalog</span>
+          <span class="nav-count" id="sidebarVideoCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item nav-action-btn" id="sidebarAddVideoBtn" title="Launch Video Studio">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          <span class="nav-text">Add New Video</span>
+          <span class="nav-plus">+</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelCollections" id="navCollections">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span class="nav-text">Collections &amp; Playlists</span>
+          <span class="nav-count" id="sidebarCollectionsCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelCategories" id="navCategories">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span class="nav-text">Categories &amp; Feeds</span>
+          <span class="nav-count" id="sidebarCategoriesCount">0</span>
+        </button>
+
+        <!-- SECTION: MANAGEMENT -->
+        <div class="nav-section-label">MANAGEMENT</div>
+
+        <button type="button" class="nav-item" data-panel="panelHomepage" id="navHomepage">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="nav-text">Homepage Manager</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelAnalytics" id="navAnalytics">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span class="nav-text">Analytics</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelDmca" id="navDmca">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span class="nav-text">DMCA &amp; Rights</span>
+          <span class="nav-count nav-count-danger" id="sidebarDmcaCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelHealth" id="navHealth">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          <span class="nav-text">System Health</span>
+          <span class="nav-count" id="sidebarHealthBadge">100%</span>
+        </button>
+
+        <!-- SECTION: SYSTEM -->
+        <div class="nav-section-label">SYSTEM</div>
+
+        <button type="button" class="nav-item" data-panel="panelSync" id="navSync">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path></svg>
+          <span class="nav-text">Import &amp; Export</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelLogs" id="navLogs">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span class="nav-text">Activity Logs</span>
+          <span class="nav-count" id="sidebarLogsCount">0</span>
+        </button>
+
+        <button type="button" class="nav-item" data-panel="panelSettings" id="navSettings">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span class="nav-text">Settings</span>
+        </button>
+
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <a href="index.html" class="sidebar-footer-link" target="_blank" title="Open live discovery page">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <span>Live Discovery</span>
+        </a>
+
+        <div class="sidebar-footer-row">
+          <button class="theme-icon-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+            <svg class="svg-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="svg-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          
+          <button type="button" class="url-btn-sm" id="btnOpenShortcuts" title="Keyboard Shortcuts Cheat-sheet (?)">
+            <span>⌨ Shortcuts</span>
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN APPLICATION WORKSPACE -->
+    <div class="admin-main-wrap">
+
+      <!-- TOPBAR -->
+      <header class="admin-topbar">
+        <div class="admin-breadcrumb">
+          <span>NorthSpace Admin</span>
+          <span>/</span>
+          <span class="admin-breadcrumb-active" id="breadcrumbActive">Overview</span>
+        </div>
+
+        <div class="admin-topbar-actions">
+          <!-- Global Search Input -->
+          <div class="admin-global-search">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;color:var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="globalSearchInput" placeholder="Quick search catalog...">
+            <kbd>Ctrl+K</kbd>
+          </div>
+
+          <button type="button" class="crm-btn-primary" id="topbarNewVideoBtn">
+            <span>+ New Video</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT PANELS CONTAINER -->
+      <div class="admin-content" id="adminMainContent">
+
+        <!-- ==================================================================
+             PANEL 1: OVERVIEW DASHBOARD
+             ================================================================== -->
+        <section class="admin-panel active" id="panelOverview">
+          
+          <!-- Key Metrics Grid -->
+          <div class="crm-metrics-grid">
+            <div class="crm-metric-card">
+              <span class="crm-metric-label">Total Catalog Assets</span>
+              <span class="crm-metric-value" id="overviewTotalVideos">0</span>
+              <span class="crm-metric-hint">Playable motion records</span>
+            </div>
+            <div class="crm-metric-card">
+              <span class="crm-metric-label">Active Embeds</span>
+              <span class="crm-metric-value" id="overviewEmbeds">0</span>
+              <span class="crm-metric-hint">YouTube &amp; iframe sources</span>
+            </div>
+            <div class="crm-metric-card">
+              <span class="crm-metric-label">Curated Collections</span>
+              <span class="crm-metric-value" id="overviewCollections">0</span>
+              <span class="crm-metric-hint">Themed playlists</span>
+            </div>
+            <div class="crm-metric-card">
+              <span class="crm-metric-label">Rights Queue</span>
+              <span class="crm-metric-value" id="overviewDmca" style="color:#e11d48;">0</span>
+              <span class="crm-metric-hint">Pending adjudication</span>
+            </div>
+            <div class="crm-metric-card">
+              <span class="crm-metric-label">System Health</span>
+              <span class="crm-metric-value" id="overviewHealth" style="color:#10b981;">100%</span>
+              <span class="crm-metric-hint">Stream operational score</span>
+            </div>
+          </div>
+
+          <!-- 2-Column Dashboard Grid -->
+          <div class="dash-grid-2">
+            
+            <!-- Left Column: Recently Edited Videos + System Health Quick Alert -->
+            <div style="display:flex;flex-direction:column;gap:24px;">
+              
+              <!-- Recently Edited Videos Widget -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Recently Modified Assets</span>
+                  <button type="button" class="url-btn-sm" id="btnOverviewViewAllVideos">View Catalog &rarr;</button>
+                </div>
+                <div class="dash-list" id="overviewRecentVideosList">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Quick Health & Broken Link Scanner Alert -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Catalog Stream Health Diagnostic</span>
+                  <button type="button" class="url-btn-sm" id="btnQuickHealthScan">⚡ Run Diagnostic</button>
+                </div>
+                <div class="dash-card-body">
+                  <div class="health-gauge-box">
+                    <div class="health-score-circle" id="overviewHealthCircle">100%</div>
+                    <div>
+                      <h4 style="font-size:14px;font-weight:600;margin-bottom:4px;">Stream Availability Verified</h4>
+                      <p style="font-size:12px;color:var(--text-secondary);line-height:1.45;" id="overviewHealthSummary">
+                        All media links have valid external embed or direct progressive HTTP containers.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Recent Activity Feed + Quick Launchpad -->
+            <div style="display:flex;flex-direction:column;gap:24px;">
+              
+              <!-- Recent Activity Audit Feed -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Recent Activity Audit Trail</span>
+                  <button type="button" class="url-btn-sm" id="btnOverviewViewLogs">All Logs &rarr;</button>
+                </div>
+                <div class="dash-list" id="overviewActivityLogsList">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Quick Launchpad -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Administrative Launchpad</span>
+                </div>
+                <div class="dash-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <button type="button" class="crm-btn-secondary" id="launchpadAddVideoBtn" style="justify-content:center;padding:12px;">+ Add Video</button>
+                  <button type="button" class="crm-btn-secondary" id="launchpadCollectionsBtn" style="justify-content:center;padding:12px;">Playlists</button>
+                  <button type="button" class="crm-btn-secondary" id="launchpadHomepageBtn" style="justify-content:center;padding:12px;">Homepage</button>
+                  <button type="button" class="crm-btn-secondary" id="launchpadBackupBtn" style="justify-content:center;padding:12px;">Export Backup</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 2: VIDEO CATALOG MANAGER
+             ================================================================== -->
+        <section class="admin-panel" id="panelVideos">
+          
+          <div class="crm-toolbar">
+            <div class="crm-search-box">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--text-muted);margin-right:8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="crmVideoSearch" class="crm-search-input" placeholder="Search catalog by title, id, slug, or tags (Ctrl+K)...">
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <!-- View Switcher (List vs Grid) -->
+              <div class="crm-view-switcher">
+                <button type="button" class="crm-view-btn active" id="crmViewListBtn" title="Table List View">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                  <span>List</span>
+                </button>
+                <button type="button" class="crm-view-btn" id="crmViewGridBtn" title="Media Grid View">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  <span>Grid</span>
+                </button>
+              </div>
+
+              <select id="crmCategoryFilter" class="crm-form-select" style="height:38px;padding:0 12px;">
+                <option value="all">All Genres</option>
+                <!-- Dynamically populated -->
+              </select>
+
+              <button class="crm-btn-secondary" id="btnCatalogScanDuplicates" title="Identify repeated video entries">
+                <span>Detect Duplicates</span>
+              </button>
+
+              <button class="crm-btn-primary" id="openAddVideoModalBtn">
+                <span>+ Add Video Embed</span>
+              </button>
+              <button class="crm-btn-danger" id="clearAllVideosBtn" title="Wipe all videos and reset catalog" style="padding:8px 16px;border-radius:var(--radius-pill);display:inline-flex;align-items:center;gap:6px;">
+                <span>Wipe Catalog</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter Pills Strip -->
+          <div class="crm-filter-pills" id="crmFilterPills">
+            <button type="button" class="crm-filter-pill active" data-filter="all">
+              <span>All Videos</span>
+              <span class="pill-badge" id="pillCountAll">0</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="published">
+              <span>Published</span>
+              <span class="pill-badge" id="pillCountPublished">0</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="draft">
+              <span>Drafts</span>
+              <span class="pill-badge" id="pillCountDrafts">0</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="broken">
+              <span>Broken Links</span>
+              <span class="pill-badge" id="pillCountBroken">0</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="no-thumb">
+              <span>Missing Thumbnails</span>
+              <span class="pill-badge" id="pillCountNoThumb">0</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="recent">
+              <span>Recently Updated</span>
+            </button>
+            <button type="button" class="crm-filter-pill" data-filter="views">
+              <span>Most Viewed</span>
+            </button>
+          </div>
+
+          <!-- Table Card (List View) -->
+          <div class="crm-table-card" id="crmVideoTableContainer">
+            <table class="crm-table" id="crmVideoTable">
+              <thead>
+                <tr>
+                  <th style="width:36px;text-align:center;">
+                    <input type="checkbox" id="masterCheckbox" title="Select all visible videos" style="cursor:pointer;accent-color:var(--accent);">
+                  </th>
+                  <th class="table-thumb-col">Preview</th>
+                  <th>Title &amp; Identifier</th>
+                  <th>Category &amp; Tags</th>
+                  <th>Playback Source</th>
+                  <th>Stats</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crmVideoTableBody">
+                <!-- Dynamically populated by admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Media Grid View (Initially Hidden) -->
+          <div class="crm-video-grid-view" id="crmVideoGridContainer" style="display:none;"></div>
+
+          <!-- Floating Bulk Selection Bar -->
+          <div class="bulk-actions-bar" id="bulkActionsBar">
+            <span class="bulk-count-badge" id="bulkSelectedCount">0 selected</span>
+            
+            <div style="display:flex;align-items:center;gap:8px;">
+              <select id="bulkCategorySelect" class="crm-form-select" style="height:34px;padding:0 10px;font-size:12px;">
+                <option value="">Move to Category...</option>
+              </select>
+              <button type="button" class="url-btn-sm" id="bulkApplyCategoryBtn">Apply Category</button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="text" id="bulkTagInput" class="crm-form-input" placeholder="Tag name..." style="height:34px;font-size:12px;padding:4px 10px;width:120px;">
+              <button type="button" class="url-btn-sm" id="bulkAddTagBtn">+ Add Tag</button>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+              <button type="button" class="url-btn-sm" id="bulkPublishBtn">✓ Publish</button>
+              <button type="button" class="url-btn-sm" id="bulkDraftBtn">Draft</button>
+            </div>
+
+            <button type="button" class="url-btn-sm" id="bulkExportBtn">Export JSON</button>
+            <button type="button" class="crm-btn-danger" id="bulkDeleteBtn" style="padding:6px 14px;font-size:11.5px;border-radius:var(--radius-pill);">Delete Selected</button>
+            <button type="button" class="url-btn-sm" id="bulkClearBtn" style="margin-left:auto;">✕ Clear</button>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 3: COLLECTIONS & PLAYLISTS MANAGER
+             ================================================================== -->
+        <section class="admin-panel" id="panelCollections">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Curated Collections &amp; Playlists</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Group videos into themed retrospective showcases, director reels, and editorial feature strips.
+              </p>
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-primary" id="openAddCollectionModalBtn">
+                <span>+ Create Collection</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="collections-grid" id="collectionsGridContainer">
+            <!-- Dynamically populated -->
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 4: CATEGORIES & FEEDS WORKSPACE
+             ================================================================== -->
+        <section class="admin-panel" id="panelCategories">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Category Workspace &amp; Cover Imagery</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Configure genre shelves, custom ordering on homepage, and upload high-resolution cover artwork.
+              </p>
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-danger" id="clearAllCategoriesBtn" style="padding:8px 16px;border-radius:var(--radius-pill);">Clear All Categories</button>
+              <button class="crm-btn-primary" id="openAddCategoryModalBtn">
+                <span>+ Create New Category</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="crm-table-card">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th style="width:70px;text-align:center;">Order</th>
+                  <th class="cat-thumb-col">Cover Image</th>
+                  <th>Category Name &amp; Slug</th>
+                  <th>Description</th>
+                  <th>Videos</th>
+                  <th>Visibility</th>
+                  <th>Homepage</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crmCategoryTableBody">
+                <!-- Dynamically populated by admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 5: HOMEPAGE MANAGER
+             ================================================================== -->
+        <section class="admin-panel" id="panelHomepage">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Homepage Discovery &amp; Showcase Manager</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Control featured hero presentation, top announcement marquee, and category section ordering on the public index.
+              </p>
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-primary" id="saveHomepageConfigBtn">
+                <span>Save Homepage Configuration</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="homepage-control-grid">
+            
+            <!-- Left: Hero & Marquee Settings -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Lead Hero Video Presentation</span>
+              </div>
+              <div class="dash-card-body" style="display:flex;flex-direction:column;gap:18px;">
+                
+                <div class="crm-form-group">
+                  <label>Featured Hero Video Reel</label>
+                  <select id="homepageFeaturedVideoSelect" class="crm-form-select">
+                    <!-- Populated dynamically with catalog videos -->
+                  </select>
+                  <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);margin-top:2px;">
+                    This video is loaded into the hero theater stage with direct instant streaming.
+                  </span>
+                </div>
+
+                <div class="crm-form-group">
+                  <label>Top Marquee Announcement Text</label>
+                  <input type="text" id="homepageMarqueeInput" class="crm-form-input" placeholder="e.g. NORTHSPACE STREAMING ARCHITECTURE • ZERO COMPRESSION CELLULOID">
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:10px;padding:14px;background:var(--bg-input);border-radius:var(--radius-control);border:1px solid var(--border-subtle);">
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                    <input type="checkbox" id="homepageShowMarquee" checked style="accent-color:var(--accent);">
+                    <span>Display Marquee Announcement Ribbon</span>
+                  </label>
+
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                    <input type="checkbox" id="homepageShowCategories" checked style="accent-color:var(--accent);">
+                    <span>Display Category Shelves Strip</span>
+                  </label>
+
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;">
+                    <input type="checkbox" id="homepageShowCollections" checked style="accent-color:var(--accent);">
+                    <span>Display Curated Collections Showcase</span>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Right: Live Discovery Preview Mockup -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Live Layout Scheme</span>
+              </div>
+              <div class="dash-card-body" style="display:flex;flex-direction:column;gap:14px;">
+                <div style="padding:14px;border:1px dashed var(--border-subtle);border-radius:var(--radius-control);background:var(--bg-card);">
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:6px;">SECTION 1 • HERO STAGE</div>
+                  <div style="font-weight:600;font-size:13px;" id="previewHeroTitle">Selected Featured Video</div>
+                </div>
+
+                <div style="padding:14px;border:1px dashed var(--border-subtle);border-radius:var(--radius-control);background:var(--bg-card);">
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:6px;">SECTION 2 • MARQUEE RIBBON</div>
+                  <div style="font-size:12px;color:var(--text-secondary);" id="previewMarqueeText">Announcement preview</div>
+                </div>
+
+                <div style="padding:14px;border:1px dashed var(--border-subtle);border-radius:var(--radius-control);background:var(--bg-card);">
+                  <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:6px;">SECTION 3 • GENRE &amp; DISCOVERY SHELVES</div>
+                  <div style="font-size:12px;color:var(--text-secondary);">Active categories and feeds with video counts</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 6: ANALYTICS & STREAM DISTRIBUTION
+             ================================================================== -->
+        <section class="admin-panel" id="panelAnalytics">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Streaming Analytics &amp; Infrastructure Distribution</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Real-time metrics on CDN streaming performance, embed providers, and genre popularity.
+              </p>
+            </div>
+          </div>
+
+          <div class="dash-grid-2">
+            
+            <!-- Left: Playback Source Breakdown -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Playback Engine Breakdown</span>
+              </div>
+              <div class="dash-card-body" id="analyticsSourceBars">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Right: Top 5 Performing Assets -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Top Streamed Cinema Assets</span>
+              </div>
+              <div class="dash-list" id="analyticsTopVideosList">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 7: DMCA & RIGHTS MANAGEMENT
+             ================================================================== -->
+        <section class="admin-panel" id="panelDmca">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">DMCA Rights Management &amp; Legal Review Workflow</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Multi-stage rights-adjudication pipeline with evidence verification, administrative review notes, and audit trails.
+              </p>
+            </div>
+          </div>
+
+          <div class="crm-table-card">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th>Notice ID / Date</th>
+                  <th>Target Video Asset</th>
+                  <th>Complainant &amp; Organization</th>
+                  <th>Claimed Rights</th>
+                  <th>Workflow Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crmDmcaTableBody">
+                <!-- Populated dynamically by admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 8: SYSTEM HEALTH & BROKEN LINK DETECTOR
+             ================================================================== -->
+        <section class="admin-panel" id="panelHealth">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">System Health &amp; Broken Link Diagnostic</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Automated link validator, thumbnail integrity tester, duplicate detector, and security audits.
+              </p>
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-primary" id="btnRunHealthScan">
+                <span>⚡ Run Full Catalog Scan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Diagnostic Results Card -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Scan Results &amp; Flagged Assets</span>
+              <span class="crm-status-pill status-live" id="healthScanStatusBadge">READY TO SCAN</span>
+            </div>
+            <div class="dash-card-body" id="healthScanResultsBody">
+              <p style="font-size:13px;color:var(--text-secondary);">
+                Click "Run Full Catalog Scan" to audit all catalog items for missing video streams, invalid embeds, and missing thumbnails.
+              </p>
+            </div>
+          </div>
+
+          <!-- Duplicate Entries Diagnostic Card -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Duplicate Entry Detector</span>
+              <button type="button" class="url-btn-sm" id="btnRunDuplicateScan">Scan For Duplicates</button>
+            </div>
+            <div class="dash-card-body" id="duplicateScanResultsBody">
+              <p style="font-size:13px;color:var(--text-secondary);">
+                Detects repeated titles, duplicate embed URLs, or identical stream files across multiple catalog records.
+              </p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 9: IMPORT & EXPORT
+             ================================================================== -->
+        <section class="admin-panel" id="panelSync">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Python Extractor Sync &amp; Universal Catalog Import</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Directly paste or load results from <code>extracted_videos.txt</code> or <code>crm_catalog_extracted.json</code>.
+              </p>
+            </div>
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-secondary" id="exportCatalogJsonBtn">Export Catalog JSON</button>
+              <button class="crm-btn-danger" id="clearAllVideosSyncBtn" style="padding:8px 16px;border-radius:var(--radius-pill);">Wipe All Videos</button>
+              <button class="crm-btn-secondary" id="factoryResetBtn">Reset to Clean Slate</button>
+            </div>
+          </div>
+
+          <div class="crm-table-card" style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <label style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;">
+                Paste Extracted Text / JSON (extracted_videos.txt or .json) or Select Local File:
+              </label>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <input type="file" id="jsonFileInput" accept=".json,.txt" style="display:none;">
+                <button type="button" class="crm-btn-secondary" id="browseJsonBtn" style="font-size:11.5px;padding:6px 14px;">
+                  <span>📁 Select File (.json or .txt)</span>
+                </button>
+                <button type="button" class="crm-btn-secondary" id="pasteClipboardBtn" style="font-size:11.5px;padding:6px 14px;">
+                  <span>📋 Paste from Clipboard</span>
+                </button>
+              </div>
+            </div>
+            <textarea id="importJsonTextarea" class="crm-code-box" style="min-height:220px;" placeholder="PASTE EITHER FORMAT HERE:
+
+[Format 1: Plain Text from extracted_videos.txt]
+=== Video Record #1 ===
+Source URL   : https://aamchor.com/videos/...
+Title        : Video Title Here
+Direct Stream: https://cdn.aamchor.com/...mp4
+Embed Link   : N/A
+Thumbnail    : https://cdn.aamchor.com/...jpg
+Description  : Description text...
+------------------------------------------------------------
+
+[Format 2: JSON from crm_catalog_extracted.json]
+[
+  {
+    &quot;title&quot;: &quot;My Extracted Video&quot;,
+    &quot;videoUrl&quot;: &quot;https://cdn.example.com/video.mp4&quot;,
+    &quot;category&quot;: &quot;leaks&quot;
+  }
+]"></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);" id="importFileStatus">
+                Ready to import from extracted_videos.txt, JSON file, or clipboard
+              </span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button class="crm-btn-secondary" id="importAppendBtn" style="font-size:12px;padding:9px 18px;">+ Append to Catalog</button>
+                <button class="crm-btn-primary" id="importJsonBtn">Import &amp; Overwrite Catalog</button>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 10: ACTIVITY LOGS
+             ================================================================== -->
+        <section class="admin-panel" id="panelLogs">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">Administrative Activity Logs &amp; Audit Trail</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Detailed audit trail tracking video creation, status modifications, DMCA reviews, and category reorganizations.
+              </p>
+            </div>
+
+            <div class="crm-toolbar-actions">
+              <button class="crm-btn-secondary" id="btnExportActivityLogs">Export Logs (JSON)</button>
+              <button class="crm-btn-danger" id="btnClearActivityLogs">Clear Logs</button>
+            </div>
+          </div>
+
+          <!-- Category filter for logs -->
+          <div class="crm-filter-pills" id="logFilterPills">
+            <button type="button" class="crm-filter-pill active" data-log-filter="all">All Logs</button>
+            <button type="button" class="crm-filter-pill" data-log-filter="videos">Videos</button>
+            <button type="button" class="crm-filter-pill" data-log-filter="categories">Categories</button>
+            <button type="button" class="crm-filter-pill" data-log-filter="collections">Collections</button>
+            <button type="button" class="crm-filter-pill" data-log-filter="dmca">DMCA</button>
+            <button type="button" class="crm-filter-pill" data-log-filter="system">System</button>
+          </div>
+
+          <div class="crm-table-card">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th style="width:160px;">Timestamp</th>
+                  <th style="width:130px;">Admin Session</th>
+                  <th style="width:160px;">Action</th>
+                  <th style="width:120px;">Category</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody id="activityLogsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
+        <!-- ==================================================================
+             PANEL 11: SETTINGS & SHORTCUTS
+             ================================================================== -->
+        <section class="admin-panel" id="panelSettings">
+          
+          <div class="crm-toolbar">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;">System Settings &amp; Productivity Shortcuts</h3>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                Configure platform defaults, autosave preferences, and keyboard workflow acceleration.
+              </p>
+            </div>
+          </div>
+
+          <div class="dash-grid-2">
+            
+            <!-- Platform Settings -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Console Configuration</span>
+              </div>
+              <div class="dash-card-body" style="display:flex;flex-direction:column;gap:16px;">
+                <div class="crm-form-group">
+                  <label>Platform Name</label>
+                  <input type="text" class="crm-form-input" value="NorthSpace Stream" readonly>
+                </div>
+                <div class="crm-form-group">
+                  <label>Default Playback Preference</label>
+                  <select class="crm-form-select" id="settingDefaultPlayback">
+                    <option value="embed">External Embedded Player (YouTube / Vimeo / CDN)</option>
+                    <option value="stream">Direct Video Stream (MP4 / M3U8)</option>
+                  </select>
+                </div>
+                <div class="crm-form-group">
+                  <label>Autosave Drafts in Studio</label>
+                  <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;margin-top:6px;">
+                    <input type="checkbox" id="settingAutosaveEnabled" checked style="accent-color:var(--accent);">
+                    <span>Enable background autosave every 30 seconds</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Keyboard Shortcuts Reference -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <span class="dash-card-title">Keyboard Shortcuts Guide</span>
+              </div>
+              <div class="dash-card-body" style="display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-subtle);padding-bottom:8px;">
+                  <span style="font-size:13px;color:var(--text-secondary);">Save Video in Studio</span>
+                  <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + S</kbd>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-subtle);padding-bottom:8px;">
+                  <span style="font-size:13px;color:var(--text-secondary);">Focus Global Search</span>
+                  <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + K</kbd>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-subtle);padding-bottom:8px;">
+                  <span style="font-size:13px;color:var(--text-secondary);">Create New Video</span>
+                  <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + N</kbd>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-subtle);padding-bottom:8px;">
+                  <span style="font-size:13px;color:var(--text-secondary);">Close Modal / Drawer</span>
+                  <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Esc</kbd>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:13px;color:var(--text-secondary);">Quick Switch Panels</span>
+                  <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">1 &ndash; 9</kbd>
+                </div>
+              </div>
+            </div>
+
+            <!-- DANGER ZONE: FACTORY WIPE & FULL RESET -->
+            <div class="dash-card" style="border-color: rgba(239, 68, 68, 0.35); grid-column: 1 / -1; margin-top: 6px;">
+              <div class="dash-card-header" style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(239, 68, 68, 0.15);flex-wrap:wrap;gap:12px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:rgba(239, 68, 68, 0.12);display:flex;align-items:center;justify-content:center;color:#ef4444;flex-shrink:0;">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                  </div>
+                  <div>
+                    <span class="dash-card-title" style="color:#ef4444;">Danger Zone &bull; Factory Reset Platform</span>
+                    <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                      Wipe all video content, custom categories, playlists, DMCA notices, and local storage caches.
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="crm-btn-danger" id="btnWipeEntireWebsite" style="padding:10px 22px;font-size:12.5px;font-weight:600;border-radius:var(--radius-pill);display:inline-flex;align-items:center;gap:8px;">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  <span>Reset &amp; Wipe Whole Website</span>
+                </button>
+              </div>
+              <div class="dash-card-body" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--text-secondary);">
+                <p style="margin:0;max-width:760px;line-height:1.6;">
+                  This action performs a deep factory purge of the local database and caches. All videos, custom categories, collections, watch history, and administrative activity trails will be permanently deleted. The site will be returned to a 100% clean, blank state.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- ==================================================================
+           VIEW 2: FULL-PAGE VIDEO EMBED & STREAM STUDIO
+           Left: Configuration Form (scrollable)
+           Right: Sticky Live Preview (Video player, Thumbnail, Title, Description, Status)
+           ================================================================== -->
+      <div class="crm-studio-view" id="crmStudioView" style="display: none;">
+        
+        <!-- Studio Header Bar -->
+        <div class="studio-top-bar">
+          <div class="studio-top-left">
+            <button class="studio-back-btn" id="studioBackBtn" title="Return to Catalog Manager">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              <span>&larr; Back to Catalog</span>
+            </button>
+            <div class="studio-title-block">
+              <h2 class="studio-heading" id="studioHeading">Add New Video Embed Link</h2>
+              <span class="crm-status-pill status-embed" id="studioBadge">NEW EMBED</span>
+            </div>
+          </div>
+
+          <div class="studio-top-right">
+            <button type="button" class="crm-btn-secondary" id="studioNewBtn">+ New Video</button>
+            <a href="#" target="_blank" class="crm-btn-secondary" id="studioWatchLiveBtn" style="display:none;text-decoration:none;">Watch Live &nearr;</a>
+            <button type="button" class="crm-btn-danger" id="studioDeleteBtn" style="display:none;">Delete Video</button>
+          </div>
+        </div>
+
+        <!-- Studio Two-Column Grid:
+             LEFT: Video Configuration Form (scrollable)
+             RIGHT: Sticky Live Preview -->
+        <div class="studio-grid">
+
+          <!-- LEFT COLUMN: Video Configuration Form -->
+          <div class="studio-form-col">
+            <form id="studioForm" class="studio-card" style="padding: 26px; display:flex; flex-direction:column; gap:22px;">
+              <input type="hidden" id="studioId">
+              <input type="hidden" id="studioPlaybackType" value="embed">
+
+              <!-- 1. Title & URL Slug Identifier -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                  <label style="font-weight:600;font-size:13.5px;">Video Title *</label>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);">STATUS:</span>
+                    <select id="studioStatus" class="crm-form-select" style="height:28px;padding:0 8px;font-size:11px;">
+                      <option value="published">Published (Live)</option>
+                      <option value="draft">Draft (Hidden)</option>
+                    </select>
+                  </div>
+                </div>
+                <input type="text" id="studioTitle" required class="crm-form-input" placeholder="e.g. 35mm Brutalist Motion Reel">
+                
+                <!-- Editable Slug Identifier -->
+                <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);white-space:nowrap;">URL Slug:</span>
+                  <input type="text" id="studioSlug" class="crm-form-input" placeholder="35mm-brutalist-motion-reel" style="font-family:var(--font-mono);font-size:11.5px;padding:4px 10px;height:30px;">
+                  <button type="button" class="url-btn-sm" id="studioAutoSlugBtn" title="Auto-generate slug from title">Auto-Generate</button>
+                </div>
+              </div>
+
+              <!-- 2. Playback Configuration Selector -->
+              <div style="border-top:1px solid var(--border-subtle);padding-top:18px;">
+                <label style="font-weight:600;font-size:13px;display:block;">Playback Configuration</label>
+                <p style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">
+                  Choose how this video should be played. Select between external embed providers or high-performance direct video streams.
+                </p>
+
+                <div class="playback-config-grid">
+                  <!-- Option 1: External Embedded Player -->
+                  <div class="playback-card active" id="playbackCardEmbed">
+                    <div class="playback-card-title">
+                      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                      <span>External Embedded Player</span>
+                    </div>
+                    <div class="playback-card-desc">
+                      YouTube-compatible embeds, Vimeo, CDN embeds, or permitted iframe providers.
+                    </div>
+                  </div>
+
+                  <!-- Option 2: Direct Video Stream -->
+                  <div class="playback-card" id="playbackCardStream">
+                    <div class="playback-card-title">
+                      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      <span>Direct Video Stream</span>
+                    </div>
+                    <div class="playback-card-desc">
+                      MP4, WebM, or HLS (.m3u8) progressive HTTP media sources.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Input: External Embed Link -->
+                <div id="embedConfigSection" style="margin-top:14px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <label style="font-size:12px;color:var(--text-secondary);font-family:var(--font-mono);">External Embed Link (Iframe URL)</label>
+                    <span id="detectedProviderBadge" class="crm-status-pill status-canvas" style="font-size:10px;">Autodetect Provider</span>
+                  </div>
+                  <input type="url" id="studioEmbedUrl" class="crm-form-input" placeholder="e.g. https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ or CDN embed URL">
+                  
+                  <div class="url-tools-row">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <button type="button" class="url-btn-sm" id="btnValidateEmbed">
+                        <span>✓ Validate URL</span>
+                      </button>
+                      <button type="button" class="url-btn-sm" id="btnTestEmbed">
+                        <span>⚡ Test Connection</span>
+                      </button>
+                      <button type="button" class="url-btn-sm" id="btnFixEmbedUrl" style="display:none;color:var(--accent);">
+                        <span>Auto-Convert to Embed Link</span>
+                      </button>
+                    </div>
+                    <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);">
+                      HTTPS required
+                    </span>
+                  </div>
+
+                  <div id="embedValidationAlert" class="url-validation-box" style="display:none;margin-top:8px;"></div>
+                </div>
+
+                <!-- Input: Direct Video Stream Link -->
+                <div id="streamConfigSection" style="margin-top:14px;">
+                  <label style="font-size:12px;color:var(--text-secondary);font-family:var(--font-mono);">Direct Video Stream Link (MP4 / M3U8 / WebM)</label>
+                  <input type="url" id="studioVideoUrl" class="crm-form-input" placeholder="e.g. https://cdn.example.com/videos/stream.mp4">
+                  
+                  <div class="url-tools-row">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <button type="button" class="url-btn-sm" id="btnValidateStream">
+                        <span>✓ Validate Stream</span>
+                      </button>
+                      <button type="button" class="url-btn-sm" id="btnTestStream">
+                        <span>⚡ Test Reachability</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div id="streamValidationAlert" class="url-validation-box" style="display:none;margin-top:8px;"></div>
+                </div>
+              </div>
+
+              <!-- 3. Thumbnail Poster URL & Instant Live Preview -->
+              <div style="border-top:1px solid var(--border-subtle);padding-top:18px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                  <label style="font-weight:600;font-size:13px;">Thumbnail Poster Image URL</label>
+                  <button type="button" class="url-btn-sm" id="btnUploadThumbFile">
+                    <span>📁 Upload Image File</span>
+                  </button>
+                  <input type="file" id="thumbFileInput" accept="image/*" style="display:none;">
+                </div>
+                <input type="url" id="studioThumbUrl" class="crm-form-input" placeholder="e.g. https://cdn.domain.com/thumb.jpg or upload below">
+
+                <!-- Automatic Live Thumbnail Preview Container -->
+                <div class="studio-thumb-preview" id="studioThumbPreviewContainer">
+                  <img src="" alt="Thumbnail preview" class="studio-thumb-img" id="studioThumbPreviewImg" style="display:none;">
+                  <div class="studio-thumb-info" id="studioThumbInfo">
+                    <div class="studio-thumb-status" id="studioThumbStatus">
+                      <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                      <span>Instant thumbnail preview appears here once URL is typed</span>
+                    </div>
+                    <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);" id="studioThumbDimensions">Recommended 16:9 ratio (1280x720)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. Category & Duration -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--border-subtle);padding-top:18px;">
+                <div class="crm-form-group">
+                  <label style="font-weight:600;font-size:13px;">Category / Genre *</label>
+                  <select id="studioCategory" class="crm-form-select">
+                    <!-- Dynamically populated from AetherCatalog.getCategories() -->
+                  </select>
+                </div>
+
+                <div class="crm-form-group">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                    <label style="font-weight:600;font-size:13px;">Duration (Seconds)</label>
+                    <span id="studioDurationPreview" style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">00:00</span>
+                  </div>
+                  <input type="number" id="studioDuration" class="crm-form-input" placeholder="180">
+                </div>
+              </div>
+
+              <!-- 5. Tags & Description -->
+              <div class="crm-form-group">
+                <label style="font-weight:600;font-size:13px;">Tags (Comma-separated)</label>
+                <input type="text" id="studioTags" class="crm-form-input" placeholder="stream, cinema, 35mm, motion, experimental">
+              </div>
+
+              <div class="crm-form-group">
+                <label style="font-weight:600;font-size:13px;">Description</label>
+                <textarea id="studioDescription" rows="3" class="crm-form-textarea" placeholder="Detailed architectural description of this stream asset..."></textarea>
+              </div>
+
+              <!-- Footer: Autosave Status, Unsaved Changes & Action Buttons -->
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:6px;padding-top:16px;border-top:1px solid var(--border-subtle);">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span id="studioAutosaveStatus" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+                    • Autosave active
+                  </span>
+                  <span id="studioUnsavedIndicator" style="display:none;font-family:var(--font-mono);font-size:11px;color:#f59e0b;">
+                    • Unsaved changes
+                  </span>
+                </div>
+                
+                <div style="display:flex;align-items:center;gap:10px;margin-left:auto;">
+                  <button type="button" class="crm-btn-secondary" id="studioResetFieldsBtn">Reset</button>
+                  <button type="button" class="crm-btn-secondary" id="studioSaveDraftBtn">Save as Draft</button>
+                  <button type="submit" class="crm-btn-primary" id="studioSubmitBtn" style="padding:10px 24px;font-size:13px;display:inline-flex;align-items:center;gap:8px;">
+                    <span id="studioSubmitSpinner" class="btn-spinner" style="display:none;"></span>
+                    <span id="studioSubmitText">Publish Video</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: Sticky Live Preview -->
+          <div class="studio-preview-col">
+            <div class="studio-sticky-preview">
+              
+              <!-- Live Video Player Card -->
+              <div class="studio-card">
+                <div class="studio-card-header">
+                  <div>
+                    <span class="studio-card-title">Live Video Player</span>
+                    <div style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);margin-top:2px;">
+                      Interactive Stage (Embed or Stream)
+                    </div>
+                  </div>
+                  <span class="crm-status-pill status-canvas" id="previewSourceBadge">No Source Loaded</span>
+                </div>
+
+                <!-- 16:9 Interactive Player Preview Stage -->
+                <div class="studio-player-stage" id="studioPlayerStage">
+                  <div class="studio-empty-player" id="studioEmptyPlayer">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>Enter an embed link or stream URL to load live player</span>
+                  </div>
+                </div>
+
+                <!-- Embed Validation Status Banner -->
+                <div class="studio-embed-banner" id="previewValidationBanner">
+                  <span class="status-indicator-dot dot-inactive" id="previewStatusDot"></span>
+                  <span id="previewStatusText" style="font-family:var(--font-mono);font-size:11px;">Embed status: Awaiting valid playback source</span>
+                </div>
+
+                <!-- Live Card & Metadata Bar Preview -->
+                <div class="studio-preview-meta">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div class="studio-preview-cat" id="previewCategory">CINEMA</div>
+                    <span id="previewDurationBadge" style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);">00:00</span>
+                  </div>
+                  <h3 class="studio-preview-title" id="previewTitle">Untitled Video Reel</h3>
+                  <p class="studio-preview-desc" id="previewDescription">Curated high-bitrate video stream asset.</p>
+                  <div class="studio-preview-tags" id="previewTags">
+                    <span class="studio-tag-pill">#stream</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Catalog Jump Switcher -->
+              <div class="studio-card" style="padding:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                  <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;">
+                    Quick Switch Catalog Item:
+                  </span>
+                  <span id="studioQuickCount" style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);">0 items</span>
+                </div>
+                <select id="studioQuickSwitchSelect" class="crm-form-select" style="font-size:12px;">
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ==================================================================
+       MODALS & OVERLAYS
+       ================================================================== -->
+
+  <!-- MODAL 1: CREATE / EDIT COLLECTION MODAL WITH VIDEO CHECKLIST -->
+  <div class="crm-modal-backdrop" id="collectionModal" style="display: none;">
+    <div class="crm-modal-card" style="max-width: 620px;">
+      <div class="crm-modal-header">
+        <span class="crm-modal-title" id="collModalTitle">Create Curated Collection</span>
+        <button type="button" class="crm-modal-close" id="collModalCloseBtn">&times;</button>
+      </div>
+
+      <form id="collectionForm" class="crm-modal-body">
+        <input type="hidden" id="collModalId">
+
+        <div class="crm-form-group">
+          <label>Collection Name *</label>
+          <input type="text" id="collModalName" class="crm-form-input" placeholder="e.g. 35mm Brutalist Showcase" required>
+        </div>
+
+        <div class="crm-form-group">
+          <label>Slug Identifier</label>
+          <input type="text" id="collModalSlug" class="crm-form-input" placeholder="e.g. brutalist-showcase">
+        </div>
+
+        <div class="crm-form-group">
+          <label>Cover Artwork URL</label>
+          <input type="url" id="collModalImageUrl" class="crm-form-input" placeholder="https://cdn.domain.com/cover.jpg">
+        </div>
+
+        <div class="crm-form-group">
+          <label>Description</label>
+          <textarea id="collModalDescription" rows="2" class="crm-form-textarea" placeholder="Editorial overview of this curated playlist..."></textarea>
+        </div>
+
+        <!-- Video Selection Checklist -->
+        <div class="crm-form-group">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <label>Select Videos to Include</label>
+            <span id="collSelectedVideoCount" style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">0 selected</span>
+          </div>
+          <div class="video-select-checklist" id="collVideoChecklist">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="crm-modal-actions">
+          <button type="button" class="crm-btn-secondary" id="collModalCancelBtn">Cancel</button>
+          <button type="submit" class="crm-btn-primary" id="collModalSubmitBtn">Save Collection</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: DYNAMIC CATEGORY CREATE / EDIT -->
+  <div class="crm-modal-backdrop" id="categoryModal" style="display: none;">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <span class="crm-modal-title" id="catModalTitle">Create Category Workspace</span>
+        <button type="button" class="crm-modal-close" id="catModalCloseBtn">&times;</button>
+      </div>
+
+      <form id="categoryForm" class="crm-modal-body">
+        <input type="hidden" id="catModalId">
+
+        <div class="crm-form-group">
+          <label>Category Display Name *</label>
+          <input type="text" id="catModalName" class="crm-form-input" placeholder="e.g. Cyberpunk &amp; Sci-Fi" required>
+        </div>
+
+        <div class="crm-form-group">
+          <label>Slug Identifier</label>
+          <input type="text" id="catModalSlug" class="crm-form-input" placeholder="e.g. sci-fi">
+        </div>
+
+        <div class="crm-form-group">
+          <label>Category Cover Image</label>
+          <div class="cat-image-preview-stage" id="catPreviewStage" style="margin-bottom:8px;">
+            <img src="" alt="" class="cat-preview-img" id="catPreviewImg" style="display:none;">
+            <div class="cat-preview-placeholder" id="catPreviewPlaceholder">
+              <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:28px;height:28px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <span>Upload an image file or enter URL below</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <input type="file" id="catImageFileInput" accept="image/*" style="display:none;">
+            <button type="button" class="crm-btn-secondary" id="catBrowseFileBtn" style="font-size:12px;padding:6px 14px;">
+              <span>📁 Upload Image File</span>
+            </button>
+            <span id="catFileStatusText" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Supports JPG, PNG, WEBP</span>
+          </div>
+
+          <input type="url" id="catModalImageUrl" class="crm-form-input" placeholder="Or enter Image URL: https://cdn.domain.com/category.jpg">
+        </div>
+
+        <div class="crm-form-group">
+          <label>Short Description</label>
+          <textarea id="catModalDescription" rows="2" class="crm-form-textarea" placeholder="Brief summary of videos in this category..."></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 14px;background:var(--bg-card);border-radius:var(--radius-control);border:1px solid var(--border-subtle);">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12.5px;">
+            <input type="checkbox" id="catModalVisible" checked style="accent-color:var(--accent);">
+            <span>Public Visibility</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12.5px;">
+            <input type="checkbox" id="catModalHomepage" checked style="accent-color:var(--accent);">
+            <span>Show on Homepage</span>
+          </label>
+        </div>
+
+        <div class="crm-modal-actions">
+          <button type="button" class="crm-btn-secondary" id="catModalCancelBtn">Cancel</button>
+          <button type="submit" class="crm-btn-primary" id="catModalSubmitBtn">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: DMCA RIGHTS CASE REVIEW DRAWER -->
+  <div class="crm-modal-backdrop" id="dmcaCaseModal" style="display: none;">
+    <div class="crm-modal-card dmca-case-modal">
+      <div class="crm-modal-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="crm-modal-title" id="dmcaCaseNoticeId">DMCA Case Review</span>
+          <span class="crm-status-pill status-amber" id="dmcaCaseStatusBadge">UNDER REVIEW</span>
+        </div>
+        <button type="button" class="crm-modal-close" id="dmcaModalCloseBtn">&times;</button>
+      </div>
+
+      <div class="crm-modal-body" style="padding:24px;max-height:calc(85vh - 70px);overflow-y:auto;">
+        <div class="dmca-case-grid">
+          
+          <!-- Left: Complaint & Asset -->
+          <div class="dmca-case-section">
+            <span class="dmca-section-title">1. Reported Video Asset &amp; Complaint</span>
+            
+            <div id="dmcaCaseVideoCard" style="border:1px solid var(--border-subtle);border-radius:var(--radius-control);overflow:hidden;background:var(--bg-card);display:flex;gap:14px;padding:12px;">
+              <img id="dmcaCaseVideoThumb" src="" alt="Target video" style="width:110px;height:65px;object-fit:cover;border-radius:4px;background:#000;">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;">
+                <span id="dmcaCaseVideoTitle" style="font-weight:600;font-size:13px;line-height:1.3;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Video Title</span>
+                <div style="display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+                  <span id="dmcaCaseVideoId">VID-000</span>
+                  <span id="dmcaCaseVideoPublicStatus" class="crm-status-pill status-live" style="font-size:10px;">PUBLIC LIVE</span>
+                </div>
+                <a href="#" target="_blank" id="dmcaCaseWatchLink" style="font-size:11.5px;color:var(--accent);text-decoration:none;margin-top:2px;">Open in Theater &nearr;</a>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="dmca-data-row">
+                <span class="dmca-data-label">Claimant Name</span>
+                <span class="dmca-data-value" id="dmcaCaseClaimant">—</span>
+              </div>
+              <div class="dmca-data-row">
+                <span class="dmca-data-label">Organization / Entity</span>
+                <span class="dmca-data-value" id="dmcaCaseOrg">—</span>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="dmca-data-row">
+                <span class="dmca-data-label">Contact Email</span>
+                <span class="dmca-data-value" id="dmcaCaseEmail">—</span>
+              </div>
+              <div class="dmca-data-row">
+                <span class="dmca-data-label">Date Received</span>
+                <span class="dmca-data-value" id="dmcaCaseDate">—</span>
+              </div>
+            </div>
+
+            <div class="dmca-data-row">
+              <span class="dmca-data-label">Claimed Legal Rights</span>
+              <span class="dmca-data-value" id="dmcaCaseRights" style="font-weight:500;">Exclusive Distribution &amp; Copyright Ownership</span>
+            </div>
+
+            <div class="dmca-data-row">
+              <span class="dmca-data-label">Reported Infringing URL</span>
+              <span class="dmca-data-value" id="dmcaCaseReportedUrl" style="font-family:var(--font-mono);font-size:11px;word-break:break-all;">—</span>
+            </div>
+
+            <div class="dmca-data-row">
+              <span class="dmca-data-label">Stated Reason &amp; Evidence</span>
+              <div class="dmca-data-value" id="dmcaCaseReason" style="padding:10px 12px;background:var(--bg-input);border-radius:var(--radius-control);border:1px solid var(--border-subtle);font-size:12px;line-height:1.5;">—</div>
+            </div>
+          </div>
+
+          <!-- Right: Notes, Timeline & Actions -->
+          <div class="dmca-case-section">
+            <span class="dmca-section-title">2. Legal Review &amp; Decision History</span>
+
+            <div class="crm-form-group">
+              <label style="font-size:11.5px;font-family:var(--font-mono);text-transform:uppercase;">Workflow Status</label>
+              <div style="display:flex;gap:8px;">
+                <select id="dmcaStatusSelect" class="crm-form-select" style="font-size:12.5px;">
+                  <option value="new">New (Awaiting Review)</option>
+                  <option value="under_review">Under Review</option>
+                  <option value="info_requested">Additional Info Requested</option>
+                  <option value="validated">Validated (Infringement Confirmed)</option>
+                  <option value="rejected">Rejected (Insufficient Evidence / Fair Use)</option>
+                  <option value="action_taken">Action Taken (Delisted / Taken Down)</option>
+                  <option value="closed">Closed</option>
+                </select>
+                <button type="button" class="url-btn-sm" id="dmcaUpdateStatusBtn">Update</button>
+              </div>
+            </div>
+
+            <div class="crm-form-group">
+              <label style="font-size:11.5px;font-family:var(--font-mono);text-transform:uppercase;">Administrative Review Notes</label>
+              <textarea id="dmcaCaseNotes" rows="3" class="crm-form-textarea" placeholder="Record legal assessment, jurisdiction details, or correspondence..."></textarea>
+              <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+                <button type="button" class="url-btn-sm" id="dmcaSaveNotesBtn">Save Review Notes</button>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size:11.5px;font-family:var(--font-mono);text-transform:uppercase;display:block;margin-bottom:8px;">Decision &amp; Audit Trail</label>
+              <div class="dmca-timeline" id="dmcaTimelineList"></div>
+            </div>
+
+            <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:10px;">
+              <span class="dmca-data-label">Adjudication Execution</span>
+              <button type="button" class="crm-btn-danger" id="dmcaActionBtn" style="padding:10px 18px;font-size:13px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <span>⚡ Execute Takedown (Delist Video)</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: CONFIRMATION MODAL -->
+  <div class="crm-modal-backdrop" id="confirmModal" style="display: none;">
+    <div class="crm-modal-card" style="max-width:440px;">
+      <div class="crm-modal-header">
+        <span class="crm-modal-title" id="confirmTitle">Confirm Action</span>
+        <button type="button" class="crm-modal-close" id="confirmCloseBtn">&times;</button>
+      </div>
+      <div class="crm-modal-body" style="padding:20px;">
+        <p id="confirmMessage" style="font-size:13px;line-height:1.5;color:var(--text-secondary);">Are you sure you want to proceed?</p>
+        <div class="crm-modal-actions" style="margin-top:20px;">
+          <button type="button" class="crm-btn-secondary" id="confirmCancelBtn">Cancel</button>
+          <button type="button" class="crm-btn-danger" id="confirmOkBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5: KEYBOARD SHORTCUTS CHEAT-SHEET -->
+  <div class="crm-modal-backdrop" id="shortcutsModal" style="display: none;">
+    <div class="crm-modal-card" style="max-width:480px;">
+      <div class="crm-modal-header">
+        <span class="crm-modal-title">Keyboard Shortcuts</span>
+        <button type="button" class="crm-modal-close" id="shortcutsModalCloseBtn">&times;</button>
+      </div>
+      <div class="crm-modal-body" style="padding:20px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-subtle);">
+          <span style="font-size:13px;">Save Video in Studio</span>
+          <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + S</kbd>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-subtle);">
+          <span style="font-size:13px;">Focus Global Search</span>
+          <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + K</kbd>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-subtle);">
+          <span style="font-size:13px;">Create New Video</span>
+          <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Ctrl + N</kbd>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-subtle);">
+          <span style="font-size:13px;">Close Active Modal / Drawer</span>
+          <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">Esc</kbd>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;">
+          <span style="font-size:13px;">Switch Navigation Panels</span>
+          <kbd style="font-family:var(--font-mono);font-size:11px;padding:3px 8px;background:var(--bg-input);border-radius:4px;border:1px solid var(--border-subtle);">1 &ndash; 9</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 6: PLATFORM FACTORY WIPE ANIMATED PROGRESS MODAL -->
+  <div class="crm-modal-backdrop" id="wipeProgressModal" style="display: none; z-index: 100000;">
+    <div class="crm-modal-card" style="max-width: 520px; border-color: rgba(239,68,68,0.4); box-shadow: 0 24px 60px rgba(0,0,0,0.7);">
+      <div class="crm-modal-header" style="border-bottom: 1px solid var(--border-subtle); padding: 18px 24px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div id="wipeModalSpinner" class="btn-spinner" style="width:20px;height:20px;border-width:2.5px;border-color:#ef4444;border-right-color:transparent;"></div>
+          <div>
+            <span class="crm-modal-title" id="wipeModalTitle" style="font-size:15px;font-weight:600;">Wiping Entire Platform...</span>
+            <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;" id="wipeModalSubtitle">Performing deep purge of all catalog databases and caches</div>
+          </div>
+        </div>
+      </div>
+      <div class="crm-modal-body" style="padding: 24px; display:flex; flex-direction:column; gap:18px;">
+        <!-- Progress bar and counter -->
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-family:var(--font-mono);font-size:12px;">
+            <span id="wipeCurrentActionLabel" style="color:var(--text-primary);font-weight:500;">Starting purge sequence...</span>
+            <span id="wipePercentLabel" style="color:#ef4444;font-weight:700;">0%</span>
+          </div>
+          <div style="width:100%;height:10px;background:var(--bg-input);border-radius:999px;overflow:hidden;border:1px solid var(--border-subtle);position:relative;">
+            <div id="wipeProgressBarFill" style="width:0%;height:100%;background:linear-gradient(90deg, #ef4444, #f59e0b, #10b981);border-radius:999px;transition:width 0.3s cubic-bezier(0.4,0,0.2,1);"></div>
+          </div>
+        </div>
+
+        <!-- Terminal log box -->
+        <div id="wipeTerminalBox" style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:6px;padding:12px;font-family:var(--font-mono);font-size:11.5px;color:var(--text-secondary);max-height:140px;min-height:110px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;line-height:1.5;">
+          <div style="color:var(--text-muted);">&gt; System reset command initiated...</div>
+        </div>
+      </div>
+      <div class="crm-modal-actions" id="wipeModalFooter" style="padding:14px 24px;border-top:1px solid var(--border-subtle);margin:0;background:var(--bg-surface);">
+        <button type="button" class="crm-btn-primary" id="btnCompleteWipeDismiss" style="display:none;width:100%;padding:9px 20px;font-size:13px;">✓ Complete &bull; Refresh Console</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATIONS CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/catalog-feed.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORTHSPACE — Theater Stream</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/player.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Top Dedicated Theater Header (Corner Aligned, Clean Brand + CRM Console + User Menu) -->
+  <header class="watch-header">
+    <div class="watch-header-inner">
+      
+      <!-- Far Left: Brand Logo (Links to Home) -->
+      <a href="index.html" class="brand-link" title="NorthSpace Stream Home">
+        <span class="brand-title">North</span>
+        <span class="brand-tm">SPACE // stream</span>
+      </a>
+
+      <!-- Far Right Corner: CRM Console + User Profile Avatar & Menu -->
+      <div class="watch-header-actions">
+        
+        <!-- Content CRM Console (Clean, Direct Access Without Black Badge) -->
+        <a href="admin.html" class="header-crm-btn" title="Content CRM Console">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          <span>Content CRM Console</span>
+        </a>
+
+        <div class="user-menu-wrapper" id="userMenuWrapper">
+          <button type="button" class="user-avatar-btn" id="userMenuToggleBtn" aria-expanded="false" title="User Menu">
+            <svg class="svg-icon user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <svg class="svg-icon chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Floating Dropdown Card (Clean Minimalist Professional) -->
+          <div class="user-dropdown-menu" id="userDropdownMenu" style="display: none;">
+            
+            <!-- User Header (No Clunky Circle) -->
+            <div class="dropdown-header">
+              <div class="dropdown-user-info">
+                <span class="dropdown-user-name">Guest User</span>
+                <span class="dropdown-user-status">ACTIVE SESSION</span>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-items-list">
+              <!-- 1. My Account -->
+              <button type="button" class="dropdown-item" id="menuItemAccount">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>My Account</span>
+              </button>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- 2. Dark Mode with Professional Sliding Switch -->
+              <button type="button" class="dropdown-item dropdown-toggle-item" id="menuItemTheme">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <svg class="svg-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                  <span>Dark Mode</span>
+                </div>
+                <div class="switch-track" id="themeSwitchTrack">
+                  <div class="switch-knob"></div>
+                </div>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Workspace (Directly Starts with Player Top-Left & Queue Top-Right) -->
+  <main class="watch-main-layout">
+    
+    <!-- =========================================================================
+         TOP STAGE: Player Top-Left | Queue Top-Right | Info Directly Below Player
+         ========================================================================= -->
+    <div class="watch-top-stage">
+      
+      <!-- 1. VIDEO PLAYER (Top-Left) -->
+      <div class="watch-player-wrapper" id="watchPlayerWrapper">
+        <video id="playerVideo" class="player-video-element" playsinline></video>
+        
+        <!-- Clickable Play/Pause Overlay Screen -->
+        <div class="player-overlay" id="playerOverlay">
+          <button class="big-center-play-btn" id="bigPlayBtn" title="Play / Pause">
+            <svg class="svg-icon play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+          </button>
+        </div>
+
+        <!-- Video Player Controls Bar -->
+        <div class="player-controls-bar" id="playerControlsBar">
+          
+          <!-- Scrubber Track -->
+          <div class="player-scrub-track" id="playerScrubTrack">
+            <div class="player-buffer-bar" id="playerBufferBar"></div>
+            <div class="player-fill-bar" id="playerFillBar"></div>
+            <div class="player-head" id="playerHead"></div>
+            <div class="player-hover-time" id="playerHoverTime">00:00</div>
+          </div>
+
+          <!-- Lower Controls Row -->
+          <div class="controls-lower-row">
+            
+            <!-- Left Group -->
+            <div class="ctrl-group ctrl-left">
+              <!-- Play/Pause -->
+              <button class="ctrl-btn" id="ctrlPlayBtn" title="Play / Pause (Space)">
+                <svg class="svg-icon play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg class="svg-icon pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+              </button>
+
+              <!-- 10s Rewind / Forward -->
+              <button class="ctrl-btn" id="ctrlRewindBtn" title="Rewind 10s">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              </button>
+              <button class="ctrl-btn" id="ctrlForwardBtn" title="Forward 10s">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              </button>
+
+              <!-- Volume & Mute -->
+              <div class="vol-control-wrap">
+                <button class="ctrl-btn" id="ctrlMuteBtn" title="Mute (M)">
+                  <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <input type="range" class="vol-slider" id="ctrlVolRange" min="0" max="100" value="80">
+              </div>
+
+              <!-- Timecode Display -->
+              <div class="time-readout">
+                <span id="watchCurrentTime">00:00</span>
+                <span class="slash">/</span>
+                <span id="watchDuration">00:00</span>
+              </div>
+            </div>
+
+            <!-- Right Group -->
+            <div class="ctrl-group ctrl-right">
+              <!-- Speed -->
+              <button class="ctrl-btn text-btn" id="ctrlSpeedBtn" title="Playback Speed">1x</button>
+
+              <!-- PiP -->
+              <button class="ctrl-btn" id="ctrlPipBtn" title="Picture in Picture">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><rect x="12" y="9" width="8" height="6" rx="1" ry="1"></rect></svg>
+              </button>
+
+              <!-- Fullscreen -->
+              <button class="ctrl-btn" id="ctrlFullBtn" title="Fullscreen (F)">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 2. UP NEXT QUEUE (Top-Right, Aligned to Top of Player) -->
+      <aside class="watch-queue-column">
+        <div class="watch-queue-card">
+          <div class="watch-queue-header">
+            <div>
+              <span class="queue-title">Up Next Queue</span>
+              <span class="queue-badge" id="queueCount">12 Videos</span>
+            </div>
+            <span class="queue-auto-badge">Auto-Queue</span>
+          </div>
+
+          <div class="watch-queue-list" id="watchQueueList">
+            <!-- Dynamically populated queue items beside the player -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- 3. VIDEO INFORMATION & DESCRIPTION (Directly Below Player) -->
+      <div class="watch-meta-card">
+        <div class="watch-meta-main">
+          <div class="watch-cat-badge" id="watchCategory">CINEMA</div>
+          <h1 class="watch-title-heading" id="watchTitle">Midnight Solitude: 35mm Raw Cine Reel</h1>
+          <div class="watch-stats-line">
+            <span id="watchViews">742.8K views</span>
+            <span class="dot">&bull;</span>
+            <span id="watchDate">12 days ago</span>
+            <span class="dot">&bull;</span>
+            <span class="badge-tag">STREAM</span>
+          </div>
+          <p class="watch-desc-paragraph" id="watchDescription">
+            Curated high-bitrate architectural motion reel. Mastered with high dynamic range and zero ad interruptions.
+          </p>
+          <div class="watch-tags-row" id="watchTagsRow">
+            <!-- Dynamically populated tags -->
+          </div>
+        </div>
+
+        <!-- Clean Actions Bar (Share & DMCA only, save/likes removed) -->
+        <div class="watch-actions-bar">
+          <button class="action-btn" id="watchShareBtn">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Share Video</span>
+          </button>
+          <button class="action-btn" id="watchDmcaBtn" title="Request Content Removal / DMCA Takedown" style="border-color:rgba(225,29,72,0.3);color:var(--text-secondary);">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#e11d48"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Report / DMCA</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================================
+         SCROLL DOWN SECTION: MORE VIDEOS TO DISCOVER
+         ========================================================================= -->
+    <section class="watch-more-section">
+      <div class="watch-more-header">
+        <div>
+          <h2 class="more-heading">Discover More Videos</h2>
+          <span class="more-sub-hint" id="recommendedFilterNote">// matching catalog reels</span>
+        </div>
+        <div class="more-filter-chips" id="moreFilterChips">
+          <button type="button" class="more-chip active" data-cat="all">All</button>
+          <button type="button" class="more-chip" data-cat="cinema">Cinema</button>
+          <button type="button" class="more-chip" data-cat="docs">Docs</button>
+          <button type="button" class="more-chip" data-cat="trending">Trending</button>
+          <button type="button" class="more-chip" data-cat="leaks">Leaks</button>
+        </div>
+      </div>
+
+      <div class="watch-more-grid" id="recommendedGrid">
+        <!-- Dynamically populated 4-column cards grid -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL: INTERACTIVE SHARE DESTINATIONS MODAL
+       ========================================================================= -->
+  <div class="crm-modal-backdrop" id="shareModal" style="display:none;">
+    <div class="crm-modal-card" style="max-width: 480px;">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Share Video</h3>
+        <button class="crm-modal-close" id="closeShareModalBtn">&times;</button>
+      </div>
+      
+      <div class="crm-modal-body" style="gap: 18px;">
+        <!-- Copy Direct Link Bar -->
+        <div class="crm-form-group">
+          <label style="font-size:12px;font-weight:600;color:var(--text-secondary);">Direct Theater Link</label>
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <input type="text" id="shareUrlInput" class="crm-form-input" readonly style="font-family:var(--font-mono);font-size:12px;">
+            <button type="button" class="crm-btn-primary" id="copyShareUrlBtn" style="white-space:nowrap;padding:8px 16px;">
+              Copy
+            </button>
+          </div>
+          <span id="copySuccessFeedback" style="display:none;font-family:var(--font-mono);font-size:11.5px;color:#10b981;margin-top:4px;">
+            ✓ Link copied to clipboard!
+          </span>
+        </div>
+
+        <!-- Share Destinations -->
+        <div class="crm-form-group">
+          <label style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;display:block;">Share to Destination</label>
+          <div class="share-destinations-grid">
+            <a href="#" class="share-dest-btn dest-whatsapp" id="shareDestWhatsapp" target="_blank">
+              <span>WhatsApp</span>
+            </a>
+            <a href="#" class="share-dest-btn dest-x" id="shareDestX" target="_blank">
+              <span>Twitter / X</span>
+            </a>
+            <a href="#" class="share-dest-btn dest-telegram" id="shareDestTelegram" target="_blank">
+              <span>Telegram</span>
+            </a>
+            <a href="#" class="share-dest-btn dest-reddit" id="shareDestReddit" target="_blank">
+              <span>Reddit</span>
+            </a>
+            <a href="#" class="share-dest-btn dest-email" id="shareDestEmail">
+              <span>Email</span>
+            </a>
+            <button type="button" class="share-dest-btn dest-native" id="shareDestNative" style="display:none;">
+              <span>More Options...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DMCA TAKEDOWN NOTICE MODAL -->
+  <div class="crm-modal-backdrop" id="dmcaModal" style="display:none;">
+    <div class="crm-modal-card">
+      <div class="crm-modal-header">
+        <h3 class="crm-modal-title">Submit DMCA / Content Takedown Notice</h3>
+        <button class="crm-modal-close" id="closeDmcaModalBtn">&times;</button>
+      </div>
+      <form id="dmcaForm" class="crm-modal-body">
+        <div class="crm-form-group">
+          <label>Target Video Title</label>
+          <input type="text" id="dmcaTargetTitle" class="crm-form-input" readonly>
+        </div>
+        <div class="crm-form-group">
+          <label>Your Name / Copyright Holder Name *</label>
+          <input type="text" id="dmcaClaimant" required class="crm-form-input" placeholder="e.g. Jane Doe or Horizon Media LLC">
+        </div>
+        <div class="crm-form-group">
+          <label>Contact Email Address *</label>
+          <input type="email" id="dmcaEmail" required class="crm-form-input" placeholder="e.g. legal@domain.com">
+        </div>
+        <div class="crm-form-group">
+          <label>Reason for Removal / Copyright Ownership Statement *</label>
+          <textarea id="dmcaReason" rows="3" required class="crm-form-textarea" placeholder="Describe the infringement grounds or provide original work details..."></textarea>
+        </div>
+        <div class="crm-modal-actions">
+          <button type="button" class="crm-btn-secondary" id="cancelDmcaModalBtn">Cancel</button>
+          <button type="submit" class="crm-btn-danger" id="submitDmcaBtn">Submit Takedown Notice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Development Notification Toast -->
+  <div class="dev-toast-banner" id="devToastBanner" style="display:none;">
+    <div class="dev-toast-content">
+      <span class="dev-toast-icon" id="devToastIcon">ℹ️</span>
+      <span class="dev-toast-text" id="devToastText">Feature Under Development</span>
+    </div>
+  </div>
+
+  <script src="js/catalog-feed.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/watch.js"></script>
+</body>
+</html>

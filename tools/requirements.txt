@@ -1,0 +1,6 @@
+# NorthSpace Video Scraper & Catalog Extractor Dependencies
+# Note: The scraper uses the standard Python 3.10+ library (urllib, re, json, argparse)
+# so it runs out-of-the-box with 0 pip installations required.
+# Optional recommended libraries for extended web crawling:
+requests>=2.31.0
+beautifulsoup4>=4.12.0
